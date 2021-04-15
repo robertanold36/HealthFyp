@@ -4,7 +4,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:context=".tracker.DeviceTrackerFragment">
 
     <TextView
         android:id="@+id/textView23"
@@ -56,6 +57,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView25" />
 
     <RadioGroup
+        android:id="@+id/radioGroup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="64dp"
@@ -65,16 +67,18 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text_sugar">
+
         <RadioButton
             android:id="@+id/simpleRadioButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Before Meals"/>
+            android:text="Before Meals" />
+
         <RadioButton
             android:id="@+id/simpleRadioButton1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="After Meals"/>
+            android:text="After Meals" />
     </RadioGroup>
 
     <TextView
@@ -90,6 +94,30 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView23" />
+
+    <com.google.android.material.chip.Chip
+        android:id="@+id/btn_save"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="64dp"
+        android:layout_marginLeft="64dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="64dp"
+        android:layout_marginRight="64dp"
+        android:layout_marginBottom="16dp"
+        android:gravity="center_horizontal"
+        android:text="Save"
+        android:textAlignment="center"
+        android:textColor="@color/teal_700"
+        android:textSize="15sp"
+        app:chipBackgroundColor="@color/white"
+        app:chipStrokeColor="@color/teal_700"
+        app:chipStrokeWidth="1dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/radioGroup"
+        app:layout_constraintVertical_bias="0.0" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

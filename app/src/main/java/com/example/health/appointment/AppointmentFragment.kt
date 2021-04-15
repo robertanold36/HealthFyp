@@ -1,4 +1,4 @@
-package com.example.health
+package com.example.health.appointment
 
 import android.os.Bundle
 import android.util.Log
@@ -9,7 +9,8 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.health.adapter.AppointmentListAdapter
+import com.example.health.R
+import com.example.health.appointment.adapter.AppointmentListAdapter
 import com.example.health.model.Appointment
 import com.example.health.model.AppointmentAvailableList
 import com.example.health.model.AppointmentAvailableTimeList

@@ -9,15 +9,142 @@
         android:id="@+id/homeFragment"
         android:name="com.example.health.HomeFragment"
         android:label="fragment_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_homeFragment_to_statisticsFragment"
+            app:destination="@id/statisticsFragment" />
+    </fragment>
     <fragment
         android:id="@+id/appointmentFragment"
-        android:name="com.example.health.AppointmentFragment"
+        android:name="com.example.health.appointment.AppointmentFragment"
         android:label="fragment_appointment"
         tools:layout="@layout/fragment_appointment" />
     <fragment
-        android:id="@+id/chatFragment"
-        android:name="com.example.health.ChatFragment"
+        android:id="@+id/statisticsFragment"
+        android:name="com.example.health.tracker.StatisticsTrackerFragment"
         android:label="fragment_chat"
-        tools:layout="@layout/fragment_chat" />
+        tools:layout="@layout/fragment_statistics" >
+        <action
+            android:id="@+id/action_statisticsFragment_to_healthTrackerFragment"
+            app:destination="@id/healthTrackerFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/healthTrackerFragment"
+        android:name="com.example.health.tracker.HealthTrackerFragment"
+        android:label="fragment_tracker"
+        tools:layout="@layout/fragment_tracker" >
+        <action
+            android:id="@+id/action_healthTrackerFragment_to_deviceTrackerFragment"
+            app:destination="@id/deviceTrackerFragment" />
+        <action
+            android:id="@+id/action_healthTrackerFragment_to_urinatingTrackerFragment"
+            app:destination="@id/urinatingTrackerFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/deviceTrackerFragment"
+        android:name="com.example.health.tracker.DeviceTrackerFragment"
+        android:label="fragment_symptoms_device_tracker"
+        tools:layout="@layout/fragment_symptoms_device_tracker" >
+
+        <action
+            android:id="@+id/action_deviceTrackerFragment_to_statisticsFragment"
+            app:destination="@id/statisticsFragment"
+            app:popUpTo="@id/statisticsFragment"
+            app:launchSingleTop="true"
+            app:popUpToInclusive="true"/>
+
+    </fragment>
+    <fragment
+        android:id="@+id/urinatingTrackerFragment"
+        android:name="com.example.health.tracker.UrinatingTrackerFragment"
+        android:label="fragment_symptoms_tracker_normal"
+        tools:layout="@layout/fragment_symptoms_tracker_normal" >
+        <action
+            android:id="@+id/action_urinatingTrackerFragment_to_thirstTrackerFragment"
+            app:destination="@id/thirstTrackerFragment" />
+        <action
+            android:id="@+id/action_urinatingTrackerFragment_to_heartBeatTrackerFragment"
+            app:destination="@id/heartBeatTrackerFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/thirstTrackerFragment"
+        android:name="com.example.health.tracker.ThirstTrackerFragment"
+        android:label="fragment_thirst"
+        tools:layout="@layout/fragment_thirst" >
+        <action
+            android:id="@+id/action_thirstTrackerFragment_to_nauseaTrackerFragment"
+            app:destination="@id/nauseaTrackerFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/nauseaTrackerFragment"
+        android:name="com.example.health.tracker.NauseaTrackerFragment"
+        android:label="fragment_nausea"
+        tools:layout="@layout/fragment_nausea" >
+        <action
+            android:id="@+id/action_nauseaTrackerFragment_to_dizzinessTrackerFragment"
+            app:destination="@id/dizzinessTrackerFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/dizzinessTrackerFragment"
+        android:name="com.example.health.tracker.DizzinessTrackerFragment"
+        android:label="fragment_dizziness"
+        tools:layout="@layout/fragment_dizziness" >
+
+        <action
+            android:id="@+id/action_dizzinessTrackerFragment_to_statisticsFragment"
+            app:destination="@id/statisticsFragment"
+            app:popUpTo="@id/statisticsFragment"
+            app:launchSingleTop="true"
+            app:popUpToInclusive="true"/>
+    </fragment>
+    <fragment
+        android:id="@+id/anxietyTrackerFragment"
+        android:name="com.example.health.tracker.AnxietyTrackerFragment"
+        android:label="fragment_anxiety"
+        tools:layout="@layout/fragment_anxiety" >
+        <action
+            android:id="@+id/action_anxietyTrackerFragment_to_weaknessTrackerFragment"
+            app:destination="@id/weaknessTrackerFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/fatigueTrackerFragment"
+        android:name="com.example.health.tracker.FatigueTrackerFragment"
+        android:label="fragment_fatigue"
+        tools:layout="@layout/fragment_fatigue" >
+
+        <action
+            android:id="@+id/action_fatigueTrackerFragment_to_statisticsFragment"
+            app:destination="@id/statisticsFragment"
+            app:popUpTo="@id/statisticsFragment"
+            app:launchSingleTop="true"
+            app:popUpToInclusive="true"/>
+    </fragment>
+    <fragment
+        android:id="@+id/heartBeatTrackerFragment"
+        android:name="com.example.health.tracker.HeartBeatTrackerFragment"
+        android:label="fragment_heart_beat"
+        tools:layout="@layout/fragment_heart_beat" >
+        <action
+            android:id="@+id/action_heartBeatTrackerFragment_to_sweatingTrackerFragment"
+            app:destination="@id/sweatingTrackerFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/sweatingTrackerFragment"
+        android:name="com.example.health.tracker.SweatingTrackerFragment"
+        android:label="fragment_sweating"
+        tools:layout="@layout/fragment_sweating" >
+        <action
+            android:id="@+id/action_sweatingTrackerFragment_to_anxietyTrackerFragment"
+            app:destination="@id/anxietyTrackerFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/weaknessTrackerFragment"
+        android:name="com.example.health.tracker.WeaknessTrackerFragment"
+        android:label="fragment_weakness"
+        tools:layout="@layout/fragment_weakness" >
+        <action
+            android:id="@+id/action_weaknessTrackerFragment_to_fatigueTrackerFragment"
+            app:destination="@id/fatigueTrackerFragment" />
+    </fragment>
 </navigation>

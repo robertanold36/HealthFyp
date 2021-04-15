@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:context=".tracker.HealthTrackerFragment">
 
     <TextView
         android:id="@+id/textView22"
@@ -11,7 +12,7 @@
         android:layout_height="wrap_content"
         android:text="Health Tracker"
         android:textSize="16sp"
-        app:layout_constraintBottom_toTopOf="@+id/button2"
+        app:layout_constraintBottom_toTopOf="@+id/device_tracker_btn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -19,8 +20,8 @@
         app:layout_constraintVertical_bias="0.19999999"
         app:layout_constraintVertical_chainStyle="packed" />
 
-    <Button
-        android:id="@+id/button2"
+    <com.google.android.material.chip.Chip
+        android:id="@+id/device_tracker_btn"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="64dp"
@@ -29,27 +30,39 @@
         android:layout_marginEnd="64dp"
         android:layout_marginRight="64dp"
         android:layout_marginBottom="32dp"
+        android:textColor="#faaca8"
+        android:textSize="15sp"
+        app:chipBackgroundColor="@color/white"
+        app:chipStrokeColor="#faaca8"
+        app:chipStrokeWidth="1dp"
         android:text="Device Track"
-        app:backgroundTint="#FAACA8"
-        app:layout_constraintBottom_toTopOf="@+id/button3"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toTopOf="@+id/normal_tracker_btn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView22" />
+        app:layout_constraintTop_toBottomOf="@+id/textView22"
+        android:gravity="center_horizontal" />
 
-    <Button
-        android:id="@+id/button3"
+    <com.google.android.material.chip.Chip
+        android:id="@+id/normal_tracker_btn"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="64dp"
         android:layout_marginLeft="64dp"
         android:layout_marginEnd="64dp"
         android:layout_marginRight="64dp"
-        android:text="Normal Track"
-        app:backgroundTint="#009688"
+        android:textColor="@color/teal_700"
+        android:textSize="15sp"
+        app:chipBackgroundColor="@color/white"
+        app:chipStrokeColor="@color/teal_700"
+        app:chipStrokeWidth="1dp"
+        android:text="Normal  Track"
+        android:textAlignment="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button2" />
+        app:layout_constraintTop_toBottomOf="@+id/device_tracker_btn"
+        android:gravity="center_horizontal" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Health">
         <activity
-            android:name=".MedicineActivity"
+            android:name=".medicine.MedicineActivity"
             android:label="@string/title_activity_medicine"
             android:theme="@style/Theme.Health.NoActionBar">
 
@@ -25,7 +25,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity"></activity>
+        <activity android:name=".AuthenticationActivity"></activity>
     </application>
 
 </manifest>

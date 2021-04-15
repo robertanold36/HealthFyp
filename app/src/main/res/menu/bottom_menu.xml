@@ -10,9 +10,9 @@
         android:icon="@drawable/ic_time"
         android:title="appointment"/>
     <item
-        android:id="@+id/chatFragment"
+        android:id="@+id/statisticsFragment"
         android:enabled="true"
-        android:icon="@drawable/ic_chat"
-        android:title="chat"/>
+        android:icon="@drawable/ic_baseline_analytics_24"
+        android:title="statistics"/>
 
 </menu>

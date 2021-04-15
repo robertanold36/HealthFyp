@@ -1,4 +1,4 @@
-package com.example.health.adapter
+package com.example.health.appointment.adapter
 
 import android.view.LayoutInflater
 import android.view.View
@@ -10,10 +10,9 @@ import com.example.health.R
 import com.example.health.model.Appointment
 import com.example.health.model.AppointmentAvailableList
 import com.example.health.model.AppointmentAvailableTimeList
-import com.example.health.model.AppointmentEmitter
 
-class AppointmentListTimeAdapter(subItemList: AppointmentAvailableList) :
-    RecyclerView.Adapter<AppointmentListTimeAdapter.AppointmentListTimeViewHolder>() {
+class SubAppointmentListTimeAdapter(subItemList: AppointmentAvailableList) :
+    RecyclerView.Adapter<SubAppointmentListTimeAdapter.AppointmentListTimeViewHolder>() {
 
 
     private var dataList= subItemList

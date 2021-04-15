@@ -1,4 +1,4 @@
-package com.example.health.adapter
+package com.example.health.appointment.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -53,7 +53,7 @@ class AppointmentListAdapter(var context: Context) :
         )
 
         layoutManager.initialPrefetchItemCount=appointmentDetails.timeList.size
-        val appointmentListTimeAdapter=AppointmentListTimeAdapter(appointmentDetails)
+        val appointmentListTimeAdapter= SubAppointmentListTimeAdapter(appointmentDetails)
 
         holder.rvSubItem.layoutManager = layoutManager
         holder.rvSubItem.adapter = appointmentListTimeAdapter
