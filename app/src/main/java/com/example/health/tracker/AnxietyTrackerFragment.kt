@@ -7,9 +7,12 @@ import android.view.ViewGroup
 import android.widget.Button
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.example.health.R
 
 class AnxietyTrackerFragment :Fragment(){
+
+    private val args:AnxietyTrackerFragmentArgs by navArgs()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -21,11 +24,20 @@ class AnxietyTrackerFragment :Fragment(){
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        val state=args.state
         view?.findViewById<Button>(R.id.chipYes)?.setOnClickListener {
-            findNavController().navigate(R.id.action_anxietyTrackerFragment_to_weaknessTrackerFragment)
+            val bundle=Bundle().apply {
+                putInt("state",state+1)
+            }
+            findNavController().navigate(R.id.action_anxietyTrackerFragment_to_weaknessTrackerFragment
+            ,bundle)
         }
         view?.findViewById<Button>(R.id.chipNo)?.setOnClickListener {
-            findNavController().navigate(R.id.action_anxietyTrackerFragment_to_weaknessTrackerFragment)
+            val bundle=Bundle().apply {
+                putInt("state",state)
+            }
+            findNavController().navigate(R.id.action_anxietyTrackerFragment_to_weaknessTrackerFragment
+            ,bundle)
         }
     }
 }

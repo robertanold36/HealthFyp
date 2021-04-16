@@ -15,15 +15,10 @@
             app:destination="@id/statisticsFragment" />
     </fragment>
     <fragment
-        android:id="@+id/appointmentFragment"
-        android:name="com.example.health.appointment.AppointmentFragment"
-        android:label="fragment_appointment"
-        tools:layout="@layout/fragment_appointment" />
-    <fragment
         android:id="@+id/statisticsFragment"
         android:name="com.example.health.tracker.StatisticsTrackerFragment"
         android:label="fragment_chat"
-        tools:layout="@layout/fragment_statistics" >
+        tools:layout="@layout/layout_statistics" >
         <action
             android:id="@+id/action_statisticsFragment_to_healthTrackerFragment"
             app:destination="@id/healthTrackerFragment" />
@@ -75,6 +70,10 @@
         <action
             android:id="@+id/action_thirstTrackerFragment_to_nauseaTrackerFragment"
             app:destination="@id/nauseaTrackerFragment" />
+        <argument
+            android:name="state"
+            app:argType="integer"
+            android:defaultValue="0" />
     </fragment>
     <fragment
         android:id="@+id/nauseaTrackerFragment"
@@ -84,6 +83,10 @@
         <action
             android:id="@+id/action_nauseaTrackerFragment_to_dizzinessTrackerFragment"
             app:destination="@id/dizzinessTrackerFragment" />
+        <argument
+            android:name="state"
+            app:argType="integer"
+            android:defaultValue="0" />
     </fragment>
     <fragment
         android:id="@+id/dizzinessTrackerFragment"
@@ -97,6 +100,10 @@
             app:popUpTo="@id/statisticsFragment"
             app:launchSingleTop="true"
             app:popUpToInclusive="true"/>
+        <argument
+            android:name="state"
+            app:argType="integer"
+            android:defaultValue="0" />
     </fragment>
     <fragment
         android:id="@+id/anxietyTrackerFragment"
@@ -106,6 +113,10 @@
         <action
             android:id="@+id/action_anxietyTrackerFragment_to_weaknessTrackerFragment"
             app:destination="@id/weaknessTrackerFragment" />
+        <argument
+            android:name="state"
+            app:argType="integer"
+            android:defaultValue="0" />
     </fragment>
     <fragment
         android:id="@+id/fatigueTrackerFragment"
@@ -119,6 +130,10 @@
             app:popUpTo="@id/statisticsFragment"
             app:launchSingleTop="true"
             app:popUpToInclusive="true"/>
+        <argument
+            android:name="state"
+            app:argType="integer"
+            android:defaultValue="0" />
     </fragment>
     <fragment
         android:id="@+id/heartBeatTrackerFragment"
@@ -137,6 +152,10 @@
         <action
             android:id="@+id/action_sweatingTrackerFragment_to_anxietyTrackerFragment"
             app:destination="@id/anxietyTrackerFragment" />
+        <argument
+            android:name="state"
+            app:argType="integer"
+            android:defaultValue="0" />
     </fragment>
     <fragment
         android:id="@+id/weaknessTrackerFragment"
@@ -146,5 +165,19 @@
         <action
             android:id="@+id/action_weaknessTrackerFragment_to_fatigueTrackerFragment"
             app:destination="@id/fatigueTrackerFragment" />
+        <argument
+            android:name="state"
+            app:argType="integer"
+            android:defaultValue="0" />
     </fragment>
+    <fragment
+        android:id="@+id/chatFragment"
+        android:name="com.example.health.ChatFragment"
+        android:label="fragment_chat"
+        tools:layout="@layout/fragment_chat" />
+    <fragment
+        android:id="@+id/appointmentFragment"
+        android:name="com.example.health.appointment.AppointmentFragment"
+        android:label="fragment_appointment"
+        tools:layout="@layout/fragment_appointment" />
 </navigation>

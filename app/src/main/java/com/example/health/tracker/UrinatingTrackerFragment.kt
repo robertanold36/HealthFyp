@@ -11,6 +11,8 @@ import com.example.health.R
 
 class UrinatingTrackerFragment : Fragment() {
 
+     var state:Int = 0
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -26,10 +28,18 @@ class UrinatingTrackerFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
 
         view?.findViewById<Button>(R.id.chipYes)?.setOnClickListener {
-            findNavController().navigate(R.id.action_urinatingTrackerFragment_to_thirstTrackerFragment)
+            val bundle=Bundle().apply {
+                putInt("state",state+1)
+            }
+            findNavController().
+            navigate(R.id.action_urinatingTrackerFragment_to_thirstTrackerFragment,bundle)
+
         }
         view?.findViewById<Button>(R.id.chipNo)?.setOnClickListener {
+
             findNavController().navigate(R.id.action_urinatingTrackerFragment_to_heartBeatTrackerFragment)
         }
     }
+
+
 }
