@@ -19,13 +19,14 @@ class HealthTrackerFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_tracker, container, false)
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         super.onActivityCreated(savedInstanceState)
 
-        view?.findViewById<Button>(R.id.device_tracker_btn)?.setOnClickListener {
+        view.findViewById<Button>(R.id.device_tracker_btn)?.setOnClickListener {
             findNavController().navigate(R.id.action_healthTrackerFragment_to_deviceTrackerFragment)
         }
-        view?.findViewById<Button>(R.id.normal_tracker_btn)?.setOnClickListener {
+        view.findViewById<Button>(R.id.normal_tracker_btn)?.setOnClickListener {
             findNavController().navigate(R.id.action_healthTrackerFragment_to_urinatingTrackerFragment)
         }
     }

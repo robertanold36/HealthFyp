@@ -11,7 +11,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.health.R
 import com.example.health.tracker.adapter.DailyTrackerAdapter
-import com.example.health.tracker.viewmodel.HealthTrackingViewModel
+import com.example.health.viewmodel.HealthTrackingViewModel
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class StatisticsTrackerFragment : Fragment() {
@@ -27,17 +27,18 @@ class StatisticsTrackerFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_daily_statistics, container, false)
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         super.onActivityCreated(savedInstanceState)
-        val progressBar= view?.findViewById<ProgressBar>(R.id.progressBar2)?.apply {
+        val progressBar= view.findViewById<ProgressBar>(R.id.progressBar2)?.apply {
             visibility=View.VISIBLE
         }
         healthTrackingViewModel = ViewModelProvider(this)
             .get(HealthTrackingViewModel::class.java)
-        val rvStatistics = view?.findViewById<RecyclerView>(R.id.rvDaily)
+        val rvStatistics = view.findViewById<RecyclerView>(R.id.rvDaily)
         adapter = DailyTrackerAdapter(requireActivity())
 
-        view?.findViewById<FloatingActionButton>(R.id.floatingActionButton)?.setOnClickListener {
+        view.findViewById<FloatingActionButton>(R.id.floatingActionButton)?.setOnClickListener {
             findNavController().navigate(R.id.action_statisticsFragment_to_healthTrackerFragment)
         }
 

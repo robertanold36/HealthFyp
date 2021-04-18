@@ -24,10 +24,11 @@ class UrinatingTrackerFragment : Fragment() {
         )
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         super.onActivityCreated(savedInstanceState)
 
-        view?.findViewById<Button>(R.id.chipYes)?.setOnClickListener {
+        view.findViewById<Button>(R.id.chipYes)?.setOnClickListener {
             val bundle=Bundle().apply {
                 putInt("state",state+1)
             }
@@ -35,7 +36,7 @@ class UrinatingTrackerFragment : Fragment() {
             navigate(R.id.action_urinatingTrackerFragment_to_thirstTrackerFragment,bundle)
 
         }
-        view?.findViewById<Button>(R.id.chipNo)?.setOnClickListener {
+        view.findViewById<Button>(R.id.chipNo)?.setOnClickListener {
 
             findNavController().navigate(R.id.action_urinatingTrackerFragment_to_heartBeatTrackerFragment)
         }

@@ -10,7 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.health.R
-import com.example.health.tracker.viewmodel.HealthTrackingViewModel
+import com.example.health.viewmodel.HealthTrackingViewModel
 import com.example.health.util.UtilityClass.Companion.date
 
 
@@ -30,20 +30,21 @@ class DizzinessTrackerFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_dizziness, container, false)
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         super.onActivityCreated(savedInstanceState)
         val state = args.state
 
         healthTrackingViewModel = ViewModelProvider(this)
             .get(HealthTrackingViewModel::class.java)
 
-        view?.findViewById<Button>(R.id.chipYes)?.setOnClickListener {
+        view.findViewById<Button>(R.id.chipYes)?.setOnClickListener {
 
             description="Blood sugar level seem to be high"
             stateCondition="HIGH"
             insertData(description,date,stateCondition)
         }
-        view?.findViewById<Button>(R.id.chipNo)?.setOnClickListener {
+        view.findViewById<Button>(R.id.chipNo)?.setOnClickListener {
 
             if (state>=2){
                 description="Blood sugar level seem to be high" +

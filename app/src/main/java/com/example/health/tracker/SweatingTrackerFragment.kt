@@ -22,17 +22,18 @@ class SweatingTrackerFragment :Fragment(){
         return inflater.inflate(R.layout.fragment_sweating,container,false)
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         super.onActivityCreated(savedInstanceState)
         val state=args.state
-        view?.findViewById<Button>(R.id.chipYes)?.setOnClickListener {
+        view.findViewById<Button>(R.id.chipYes)?.setOnClickListener {
             val bundle=Bundle().apply {
                 putInt("state",state+1)
             }
             findNavController().navigate(R.id.action_sweatingTrackerFragment_to_anxietyTrackerFragment
             ,bundle)
         }
-        view?.findViewById<Button>(R.id.chipNo)?.setOnClickListener {
+        view.findViewById<Button>(R.id.chipNo)?.setOnClickListener {
             val bundle=Bundle().apply {
                 putInt("state",state)
             }

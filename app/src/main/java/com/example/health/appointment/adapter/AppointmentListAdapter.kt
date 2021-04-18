@@ -5,32 +5,30 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.health.R
-import com.example.health.model.AppointmentAvailableList
-import com.example.health.model.AppointmentEmitter
 
 
 class AppointmentListAdapter(var context: Context) :
     RecyclerView.Adapter<AppointmentListAdapter.AppointmentListViewHolder>() {
 
-    private val viewPool:RecyclerView.RecycledViewPool=RecyclerView.RecycledViewPool()
-     lateinit var appointmentEmitter: AppointmentEmitter
 
+    private var dataList= listOf<String>()
 
-    private var dataList= mutableListOf<AppointmentAvailableList>()
-
-    fun setList(data: MutableList<AppointmentAvailableList>){
+    fun setList(data: List<String>){
         dataList=data
     }
 
 
     inner class AppointmentListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val rvSubItem: RecyclerView=itemView.findViewById(R.id.recyclerview_app_time)
 
-        fun bindView(appointmentAvailableList: AppointmentAvailableList) {
-            itemView.findViewById<TextView>(R.id.app_day).text = appointmentAvailableList.dayName
+        fun bindView(appointmentDayName: String) {
+            itemView.findViewById<TextView>(R.id.app_day).text = appointmentDayName
+            itemView.setOnClickListener {
+                onItemClickListener?.let {
+                    it(appointmentDayName)
+                }
+            }
         }
     }
 
@@ -43,32 +41,20 @@ class AppointmentListAdapter(var context: Context) :
     }
 
     override fun onBindViewHolder(holder: AppointmentListViewHolder, position: Int) {
-        val appointmentDetails: AppointmentAvailableList = dataList[position]
+        val appointmentDetails: String = dataList[position]
         holder.bindView(appointmentDetails)
-
-        val layoutManager = LinearLayoutManager(
-            holder.rvSubItem.context,
-            LinearLayoutManager.VERTICAL,
-            false
-        )
-
-        layoutManager.initialPrefetchItemCount=appointmentDetails.timeList.size
-        val appointmentListTimeAdapter= SubAppointmentListTimeAdapter(appointmentDetails)
-
-        holder.rvSubItem.layoutManager = layoutManager
-        holder.rvSubItem.adapter = appointmentListTimeAdapter
-        holder.rvSubItem.setRecycledViewPool(viewPool)
-
-       appointmentListTimeAdapter.setOnClickListener {
-           appointmentEmitter.onItemClicked(it)
-       }
     }
 
     override fun getItemCount(): Int {
-        return if (dataList.size > 0) {
+        return if (dataList.isNotEmpty()) {
             dataList.size
         } else {
             0
         }
+    }
+
+    private var onItemClickListener:((String)->Unit)?=null
+    fun setOnClickListener(listener:(String)->Unit){
+        onItemClickListener=listener
     }
 }

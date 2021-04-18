@@ -19,10 +19,11 @@ class DeviceTrackerFragment :Fragment(){
         return inflater.inflate(R.layout.fragment_symptoms_device_tracker,container,false)
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         super.onActivityCreated(savedInstanceState)
 
-        view?.findViewById<Button>(R.id.btn_save)?.setOnClickListener {
+        view.findViewById<Button>(R.id.btn_save)?.setOnClickListener {
             findNavController().navigate(R.id.action_deviceTrackerFragment_to_statisticsFragment)
         }
     }

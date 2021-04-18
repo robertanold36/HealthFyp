@@ -1,8 +1,10 @@
-package com.example.health.tracker.viewmodel
+
+package com.example.health.viewmodel
 
 import android.app.*
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.example.health.model.DailyTrack
 import com.example.health.repository.HealthTrackingDatabase
 import com.example.health.repository.HealthTrackingRepository
@@ -12,6 +14,7 @@ import kotlinx.coroutines.*
 class HealthTrackingViewModel(app: Application) : AndroidViewModel(app) {
 
     private val healthTrackingDatabase=HealthTrackingDatabase
+
 
     private val repository by lazy {
         HealthTrackingRepository(healthTrackingDatabase.getDatabase(app))
@@ -29,8 +32,18 @@ class HealthTrackingViewModel(app: Application) : AndroidViewModel(app) {
             }
     }
 
+
     fun getAllDailyData():LiveData<MutableList<DailyTrack>>{
       return repository.getAllDailyData()
+    }
+
+    fun getAllDaysData(): MutableLiveData<List<String>> {
+
+        return repository.getAllDays()
+    }
+
+    fun getAllAvailableAppointmentTime(dayName:String): MutableLiveData<MutableList<String>> {
+        return repository.getAllTimeAvailable(dayName)
     }
 
     override fun onCleared() {

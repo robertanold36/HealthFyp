@@ -1,31 +1,26 @@
 package com.example.health.appointment.adapter
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.health.R
 import com.example.health.model.Appointment
-import com.example.health.model.AppointmentAvailableList
-import com.example.health.model.AppointmentAvailableTimeList
 
-class SubAppointmentListTimeAdapter(subItemList: AppointmentAvailableList) :
+class SubAppointmentListTimeAdapter(var context:Context) :
     RecyclerView.Adapter<SubAppointmentListTimeAdapter.AppointmentListTimeViewHolder>() {
 
+    private var dataList= mutableListOf<String>()
+    fun setList(data: MutableList<String>){
+        dataList=data
+    }
 
-    private var dataList= subItemList
 
     inner class AppointmentListTimeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun bindView(appointmentAvailableList: AppointmentAvailableTimeList) {
-            itemView.findViewById<TextView>(R.id.app_time).text=appointmentAvailableList.time
-            val appointment=Appointment(dataList.dayName,appointmentAvailableList.time)
-            itemView.findViewById<Button>(R.id.request_appointment).setOnClickListener {
-                onItemClickListener?.let {
-                    it(appointment)
-                }
-            }
+        fun bindView(time: String) {
+            itemView.findViewById<TextView>(R.id.app_time).text=time
         }
 
     }
@@ -40,23 +35,21 @@ class SubAppointmentListTimeAdapter(subItemList: AppointmentAvailableList) :
     }
 
     override fun onBindViewHolder(holder: AppointmentListTimeViewHolder, position: Int) {
-        val appointmentDetails:AppointmentAvailableTimeList=dataList.timeList[position]
+        val appointmentDetails: String =dataList[position]
         holder.bindView(appointmentDetails)
 
     }
 
     override fun getItemCount(): Int {
-        return if (dataList.timeList.size > 0) {
-            dataList.timeList.size
+        return if (dataList.size > 0) {
+            dataList.size
         } else {
             0
         }
     }
 
-    private var onItemClickListener: ((Appointment) -> Unit)? = null
+     private var onItemClickListener: ((Appointment) -> Unit)? = null
      fun setOnClickListener(listener:(Appointment)->Unit){
          onItemClickListener=listener
      }
-
-
 }

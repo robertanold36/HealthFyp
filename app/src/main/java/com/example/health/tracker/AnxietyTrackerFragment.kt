@@ -22,17 +22,17 @@ class AnxietyTrackerFragment :Fragment(){
         return inflater.inflate(R.layout.fragment_anxiety,container,false)
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         val state=args.state
-        view?.findViewById<Button>(R.id.chipYes)?.setOnClickListener {
+        view.findViewById<Button>(R.id.chipYes)?.setOnClickListener {
             val bundle=Bundle().apply {
                 putInt("state",state+1)
             }
             findNavController().navigate(R.id.action_anxietyTrackerFragment_to_weaknessTrackerFragment
             ,bundle)
         }
-        view?.findViewById<Button>(R.id.chipNo)?.setOnClickListener {
+        view.findViewById<Button>(R.id.chipNo)?.setOnClickListener {
             val bundle=Bundle().apply {
                 putInt("state",state)
             }

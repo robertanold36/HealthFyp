@@ -14,5 +14,10 @@ class UtilityClass {
         private val month = tMonth + 1
         val date = "$tDay/$month/$tYear $hour:$tMinute"
         const val day="DAY"
+        const val appointment="Appointment"
+        const val appointmentList="Appointment List"
+        const val doctorId="6TglfkDls7blRAY4MqW2iGGmpMI2"
+
+
     }
 }
