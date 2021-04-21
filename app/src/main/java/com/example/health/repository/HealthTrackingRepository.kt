@@ -2,6 +2,7 @@ package com.example.health.repository
 
 import androidx.lifecycle.MutableLiveData
 import com.example.health.model.DailyTrack
+import com.example.health.model.Medicine
 import com.example.health.util.UtilityClass
 import com.google.firebase.firestore.FirebaseFirestore
 
@@ -29,7 +30,7 @@ class HealthTrackingRepository(private val healthTrackingDatabase: HealthTrackin
         firebaseFirestore.collection(UtilityClass.appointment)
             .document(UtilityClass.doctorId)
             .collection(UtilityClass.appointmentList)
-            .whereEqualTo("status","Available")
+            .whereEqualTo("status", "Available")
             .get().addOnSuccessListener {
                 for (document in it) {
                     val dayName = document.getString("DayName")
@@ -58,5 +59,10 @@ class HealthTrackingRepository(private val healthTrackingDatabase: HealthTrackin
             }
         return timeData
     }
+
+    fun getAllMedicine() = healthTrackingDatabase.healthTrackingDao().getAllMedicineData()
+
+    suspend fun insertMedicine(medicine: Medicine) =
+        healthTrackingDatabase.healthTrackingDao().insertMedicineData(medicine)
 
 }

@@ -6,6 +6,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.example.health.model.DailyTrack
+import com.example.health.model.Medicine
 
 @Dao
 interface HealthTrackingDao {
@@ -15,4 +16,10 @@ interface HealthTrackingDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertDailyTrack(dailyTrack: DailyTrack)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertMedicineData(medicine: Medicine)
+
+    @Query("SELECT * FROM medicine ORDER BY id DESC")
+    fun getAllMedicineData():LiveData<MutableList<Medicine>>
 }

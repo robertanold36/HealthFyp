@@ -22,16 +22,24 @@ class HomeFragment : Fragment() {
 
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         val horizontalScrollView =
-            view?.findViewById<HorizontalScrollView>(R.id.horizontalScrollView)
-        horizontalScrollView?.isHorizontalScrollBarEnabled = false;
+            view.findViewById<HorizontalScrollView>(R.id.horizontalScrollView)
+        horizontalScrollView.isHorizontalScrollBarEnabled = false;
 
 
-        view?.findViewById<Button>(R.id.trackBtn)?.setOnClickListener {
+        view.findViewById<Button>(R.id.trackBtn).setOnClickListener {
             findNavController().navigate(R.id.action_homeFragment_to_statisticsFragment)
+        }
+
+        view.findViewById<Button>(R.id.btnDiet)?.setOnClickListener {
+            findNavController().navigate(R.id.action_homeFragment_to_medicineAddFragment)
+        }
+
+        view.findViewById<Button>(R.id.btnExercise).setOnClickListener {
+            findNavController().navigate(R.id.action_homeFragment_to_medicineFragment)
         }
 
     }

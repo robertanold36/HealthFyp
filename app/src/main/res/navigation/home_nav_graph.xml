@@ -13,6 +13,12 @@
         <action
             android:id="@+id/action_homeFragment_to_statisticsFragment"
             app:destination="@id/statisticsFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_medicineAddFragment"
+            app:destination="@id/medicineAddFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_medicineFragment"
+            app:destination="@id/medicineFragment" />
     </fragment>
     <fragment
         android:id="@+id/statisticsFragment"
@@ -193,4 +199,17 @@
             android:name="DayName"
             app:argType="string" />
     </fragment>
+    <fragment
+        android:id="@+id/medicineAddFragment"
+        android:name="com.example.health.medicine.MedicineAddFragment"
+        android:label="fragment_add_medicine"
+        tools:layout="@layout/fragment_add_medicine" >
+        <action
+            android:id="@+id/action_medicineAddFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/medicineFragment"
+        android:name="com.example.health.medicine.MedicineFragment"
+        android:label="MedicineFragment" />
 </navigation>
