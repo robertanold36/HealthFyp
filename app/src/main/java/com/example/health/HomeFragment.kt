@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.HorizontalScrollView
+import android.widget.ImageButton
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -40,6 +41,10 @@ class HomeFragment : Fragment() {
 
         view.findViewById<Button>(R.id.btnExercise).setOnClickListener {
             findNavController().navigate(R.id.action_homeFragment_to_medicineFragment)
+        }
+
+        view.findViewById<ImageButton>(R.id.btnChat).setOnClickListener {
+            findNavController().navigate(R.id.action_homeFragment_to_chatActivity)
         }
 
     }

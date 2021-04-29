@@ -19,6 +19,9 @@
         <action
             android:id="@+id/action_homeFragment_to_medicineFragment"
             app:destination="@id/medicineFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_chatActivity"
+            app:destination="@id/chatActivity" />
     </fragment>
     <fragment
         android:id="@+id/statisticsFragment"
@@ -177,11 +180,6 @@
             android:defaultValue="0" />
     </fragment>
     <fragment
-        android:id="@+id/chatFragment"
-        android:name="com.example.health.ChatFragment"
-        android:label="fragment_chat"
-        tools:layout="@layout/fragment_chat" />
-    <fragment
         android:id="@+id/appointmentFragment"
         android:name="com.example.health.appointment.AppointmentFragment"
         android:label="fragment_appointment"
@@ -212,4 +210,9 @@
         android:id="@+id/medicineFragment"
         android:name="com.example.health.medicine.MedicineFragment"
         android:label="MedicineFragment" />
+    <activity
+        android:id="@+id/chatActivity"
+        android:name="com.example.health.chat.ChatActivity"
+        android:label="activity_chat"
+        tools:layout="@layout/activity_chat" />
 </navigation>

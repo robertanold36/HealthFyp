@@ -8,7 +8,9 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.health.R
 import com.example.health.model.Medicine
+import com.example.health.util.UtilityClass.Companion.dayInMills
 import java.util.*
+import kotlin.math.roundToInt
 
 class MedicineAdapter(var context: Context) :
     RecyclerView.Adapter<MedicineAdapter.MedicineViewHolder>() {
@@ -68,9 +70,9 @@ class MedicineAdapter(var context: Context) :
     }
 
     fun totalDaysTime(interval: Int, doze: Int, quantity: Int): String {
-        val totalDays = quantity / (interval * doze)
+        val totalDays = (quantity.toDouble() / (interval.toDouble() * doze.toDouble())).roundToInt()
         return if ((totalDays) > 7) {
-            "${totalDays / 7} Total Weeks"
+            "${(totalDays.toDouble() / 7).roundToInt()} Total Weeks"
         } else {
             "$totalDays Days Total"
         }.toString()
@@ -78,43 +80,43 @@ class MedicineAdapter(var context: Context) :
 
 
     fun totalDaysRemaining(millsSaved: Long, doseInterval: Int, dose: Int, quantity: Int): String {
-        val totalMills = (quantity / (doseInterval * dose)) * 86400000
+        val totalMills = (quantity / (doseInterval * dose)) * dayInMills
         val date = Date()
         val currentMills = date.time
         val millsElapsed = currentMills - millsSaved
         return if (totalMills > millsElapsed) {
             val diff = totalMills - millsElapsed
-            if (diff >= 86400000) {
-                val daysRemaining: Int = (diff / 86400000).toInt()
+            if (diff >= dayInMills) {
+                val daysRemaining: Int = (diff / dayInMills).toInt()
                 if ((daysRemaining) > 7) {
-                    "${daysRemaining / 7} Total Weeks Remaining"
+                    " | ${daysRemaining / 7} Total Weeks Remaining"
                 } else {
-                    "$daysRemaining Days Remaining"
+                    " | $daysRemaining Days Remaining"
                 }.toString()
             } else {
-                "Medicine used less than a day"
+                " | doze time less than a day"
             }
 
         } else {
-            "Doze Time is Finished"
+            " | Doze Time is Finished"
         }
     }
 
     fun getTabletsRemaining(millsSaved: Long, doseInterval: Int, dose: Int, quantity: Int): String {
-        val totalMills = (quantity / (doseInterval * dose)) * 86400000
+        val totalMills = (quantity / (doseInterval * dose)) * dayInMills
         val date = Date()
         val millsElapsed = date.time - millsSaved
         return if (millsElapsed < totalMills) {
-            if (millsElapsed >= 86400000) {
-                val daysElapsed = (millsElapsed / 86400000).toInt()
+            if (millsElapsed >= dayInMills) {
+                val daysElapsed = (millsElapsed / dayInMills).toInt()
                 val doseElapsed = (doseInterval * dose) * daysElapsed
                 val tabletsRemaining = quantity - doseElapsed
-                "$tabletsRemaining Tablets Remaining"
+                " | $tabletsRemaining Tablets Remaining"
             } else {
                 ""
             }
         } else {
-            "No tablets remaining"
+            " | No tablets remaining"
         }
     }
 }

@@ -25,7 +25,5 @@ class HomeActivity : AppCompatActivity() {
         }
 
         bottomNavigationView.setupWithNavController(homeNavHostFragment.findNavController())
-
-
     }
 }

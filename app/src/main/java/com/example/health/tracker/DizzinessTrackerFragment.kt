@@ -47,8 +47,7 @@ class DizzinessTrackerFragment : Fragment() {
         view.findViewById<Button>(R.id.chipNo)?.setOnClickListener {
 
             if (state>=2){
-                description="Blood sugar level seem to be high" +
-                        " check doctor for more details"
+                description="Blood sugar level seem to be high"
                 stateCondition="HIGH"
                 insertData(description,date,stateCondition)
 

@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import com.example.health.model.DailyTrack
 import com.example.health.model.Medicine
 import com.example.health.util.UtilityClass
+import com.example.health.util.UtilityClass.Companion.user
 import com.google.firebase.firestore.FirebaseFirestore
 
 
