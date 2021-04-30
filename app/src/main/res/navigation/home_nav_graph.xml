@@ -214,5 +214,9 @@
         android:id="@+id/chatActivity"
         android:name="com.example.health.chat.ChatActivity"
         android:label="activity_chat"
-        tools:layout="@layout/activity_chat" />
+        tools:layout="@layout/activity_chat" >
+        <argument
+            android:name="doctorDetails"
+            app:argType="com.example.health.model.Doctor" />
+    </activity>
 </navigation>

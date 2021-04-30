@@ -1,10 +1,14 @@
 package com.example.health.model
 
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
 
+
+@Parcelize
 data class PatientModel(
-    val name: String,
-    val email: String,
-    val disease: String,
-    val hospitalName: String,
-    val date:String
-)
+    var name: String="",
+    var email: String="",
+    var disease: String="",
+    var hospitalName: String="",
+    var date:String=""
+):Parcelable

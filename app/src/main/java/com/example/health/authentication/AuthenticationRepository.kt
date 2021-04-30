@@ -18,18 +18,18 @@ class AuthenticationRepository {
 
     var authenticationListener:AuthenticationListener?=null
 
-    private var hospitalList: MutableLiveData<MutableList<String>> = MutableLiveData()
+    private var hospitalList: MutableLiveData<List<String>> = MutableLiveData()
 
-    fun getAllHospitalName(): MutableLiveData<MutableList<String>> {
+    fun getAllHospitalName(): MutableLiveData<List<String>> {
         val hospitalNames: MutableList<String> = mutableListOf()
         firebaseFirestore.collection("users").get().addOnSuccessListener {
             for (document in it) {
-                val hospitalName: String? = document.getString("hospital ")
+                val hospitalName: String? = document.getString("hospital")
                 Log.e("Testing", hospitalName.toString())
                 hospitalNames.add(hospitalName!!)
 
             }
-            hospitalList.value = hospitalNames
+            hospitalList.value = hospitalNames.distinct()
         }
 
         return hospitalList

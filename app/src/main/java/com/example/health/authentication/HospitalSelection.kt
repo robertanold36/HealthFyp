@@ -35,7 +35,7 @@ class HospitalSelection : Fragment() {
         authenticationViewModel = ViewModelProvider(this)
             .get(AuthenticationViewModel::class.java)
         authenticationViewModel.getAllHospitalNames().observe(requireActivity(), {
-            adapter.addAll(it)
+            adapter.addAll(it.distinct())
             adapter.notifyDataSetChanged()
             pBar.visibility = View.INVISIBLE
         })

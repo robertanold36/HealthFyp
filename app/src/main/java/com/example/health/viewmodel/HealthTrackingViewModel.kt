@@ -16,7 +16,7 @@ class HealthTrackingViewModel(app: Application) : AndroidViewModel(app) {
     private val healthTrackingDatabase = HealthTrackingDatabase
 
 
-    private val repository by lazy {
+    val repository by lazy {
         HealthTrackingRepository(healthTrackingDatabase.getDatabase(app))
     }
     var healthTrackingEventListener: HealthTrackingEventListener? = null
@@ -56,6 +56,10 @@ class HealthTrackingViewModel(app: Application) : AndroidViewModel(app) {
     fun getAllAvailableAppointmentTime(dayName: String): MutableLiveData<MutableList<String>> {
         return repository.getAllTimeAvailable(dayName)
     }
+
+    fun getHospitalName()=repository.getPatientModel()
+
+    fun getDoctorDetails(hospitalName:String)=repository.getDoctorDetails(hospitalName)
 
 
     override fun onCleared() {
