@@ -1,11 +1,10 @@
 package com.example.health.model
 
-import java.util.*
 
-data class ChatModel(
-    val message: String,
-    val senderId: String,
-    val receiverId: String,
-    val isRead: Boolean,
-    val date: Calendar
+ class ChatModel(
+    var message: String?="",
+    var senderId: String?="",
+    var receiverId: String?="",
+    var read:Boolean?=false,
+    var date: String?=""
 )

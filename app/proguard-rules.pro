@@ -1,4 +1,8 @@
 # Add project specific ProGuard rules here.
+# -keepattributes Signature
+# -keepclassmembers class com.example.health.model** {
+#      *;
+#   }
 # You can control the set of applied configuration files using the
 # proguardFiles setting in build.gradle.
 #
