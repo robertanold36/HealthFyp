@@ -7,18 +7,19 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.health.R
+import com.example.health.model.Appointment
 
 
 class AppointmentListAdapter(var context: Context) :
     RecyclerView.Adapter<AppointmentListAdapter.AppointmentListViewHolder>() {
 
 
-    private var dataList= listOf<String>()
+    private var dataList = listOf<Appointment>()
+    private var days= arrayListOf<String>()
 
-    fun setList(data: List<String>){
-        dataList=data
+    fun setList(data: List<Appointment>) {
+        dataList = data
     }
-
 
     inner class AppointmentListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
@@ -26,7 +27,11 @@ class AppointmentListAdapter(var context: Context) :
             itemView.findViewById<TextView>(R.id.app_day).text = appointmentDayName
             itemView.setOnClickListener {
                 onItemClickListener?.let {
-                    it(appointmentDayName)
+
+                    val data: List<Appointment> =
+                        dataList.filter { it.dayName == appointmentDayName }
+
+                    it(data)
                 }
             }
         }
@@ -41,20 +46,29 @@ class AppointmentListAdapter(var context: Context) :
     }
 
     override fun onBindViewHolder(holder: AppointmentListViewHolder, position: Int) {
-        val appointmentDetails: String = dataList[position]
+
+        val appointmentDetails: String = getAllDays(dataList)[position]
         holder.bindView(appointmentDetails)
     }
 
     override fun getItemCount(): Int {
-        return if (dataList.isNotEmpty()) {
-            dataList.size
+        return if (getAllDays(dataList).isNotEmpty()) {
+            getAllDays(dataList).size
         } else {
             0
         }
     }
 
-    private var onItemClickListener:((String)->Unit)?=null
-    fun setOnClickListener(listener:(String)->Unit){
-        onItemClickListener=listener
+    private var onItemClickListener: ((List<Appointment>) -> Unit)? = null
+    fun setOnClickListener(listener: (List<Appointment>) -> Unit) {
+        onItemClickListener = listener
+    }
+
+    private fun getAllDays(data:List<Appointment>): List<String> {
+        for (day in dataList){
+            days.add(day.dayName)
+        }
+
+        return days.distinct()
     }
 }

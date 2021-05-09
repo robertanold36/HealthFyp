@@ -310,9 +310,9 @@
             android:layout_marginLeft="16dp"
             android:layout_marginTop="16dp"
             android:src="@drawable/doctor"
+            android:visibility="invisible"
             app:civ_border_color="#FF000000"
             app:civ_border_width="2dp"
-            android:visibility="invisible"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView11" />
 
@@ -353,8 +353,8 @@
             android:clickable="true"
             android:focusable="true"
             android:src="@drawable/ic_chat"
-            app:backgroundTint="#009688"
             android:visibility="invisible"
+            app:backgroundTint="#009688"
             app:layout_constraintBottom_toBottomOf="@+id/doctorName"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.75"
@@ -378,14 +378,51 @@
             style="?android:attr/progressBarStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:visibility="invisible"
             app:layout_constraintBottom_toTopOf="@+id/textView6"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView12"
-            android:visibility="invisible"
             app:layout_constraintVertical_bias="0.0" />
 
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card_badge"
+            android:layout_width="20dp"
+            android:layout_height="18dp"
+            android:visibility="invisible"
+            app:cardCornerRadius="50dp"
+            app:layout_constraintBottom_toTopOf="@+id/btnChat"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.35"
+            app:layout_constraintStart_toStartOf="@+id/btnChat"
+            app:layout_constraintTop_toTopOf="@+id/btnChat">
 
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="20dp"
+                android:layout_height="18dp"
+                android:background="@drawable/badge_notification">
+
+                <TextView
+                    android:id="@+id/msg_counter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="14dp"
+                    android:layout_marginStart="2dp"
+                    android:layout_marginLeft="2dp"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginEnd="2dp"
+                    android:layout_marginRight="2dp"
+                    android:layout_marginBottom="2dp"
+                    android:text="5"
+                    android:textColor="#000000"
+                    android:textSize="10sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.cardview.widget.CardView>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </FrameLayout>

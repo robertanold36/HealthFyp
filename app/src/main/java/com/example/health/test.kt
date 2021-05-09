@@ -1,10 +1,19 @@
 package com.example.health
 
-import kotlin.math.roundToInt
 
 fun main(){
-    val b:Long=21
-    val c:Long=10
-    val a= (b.toDouble()/c.toDouble()).roundToInt()
-    print(a)
+
+
+    val test1:((Int)->Boolean)= { it%2==0 }
+    fun data(item: (Int) -> Boolean) {
+       print(item(2))
+    }
+
+    fun test(x:Int): Boolean {
+        return ((x%2)==0)
+    }
+
+    val result=data { test(10) }
+    print(test1.invoke(10))
+
 }

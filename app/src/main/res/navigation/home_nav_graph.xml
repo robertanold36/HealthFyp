@@ -193,9 +193,10 @@
         android:name="com.example.health.appointment.AppointmentAvailableTime"
         android:label="fragment_appointment_available_time"
         tools:layout="@layout/fragment_appointment_available_time" >
+
         <argument
-            android:name="DayName"
-            app:argType="string" />
+            android:name="appointmentList"
+            app:argType="com.example.health.model.AppointmentList" />
     </fragment>
     <fragment
         android:id="@+id/medicineAddFragment"

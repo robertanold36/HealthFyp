@@ -96,9 +96,9 @@ class ChatActivity : AppCompatActivity() {
                     Log.e("Testing",p0.toString())
                     p0.getValue(ChatModel::class.java).also { chat = it }
                     if (chat?.senderId == senderId) {
-                        chat!!.message?.let { ChatFromAdapter(it) }?.let { adapter.add(it) }
-                    } else {
                         chat!!.message?.let { ChatToAdapter(it) }?.let { adapter.add(it) }
+                    } else {
+                        chat!!.message?.let { ChatFromAdapter(it) }?.let { adapter.add(it) }
                     }
 
                     rvChat?.scrollToPosition(adapter.itemCount - 1)
@@ -110,7 +110,13 @@ class ChatActivity : AppCompatActivity() {
             }
 
             override fun onChildRemoved(snapshot: DataSnapshot) {
+                chat=snapshot.getValue(ChatModel::class.java)
+                if(chat?.senderId==senderId){
+                    chat!!.message?.let { ChatFromAdapter(it) }?.let { adapter.remove(it) }
+                }else{
+                    chat!!.message?.let { ChatToAdapter(it) }?.let { adapter.remove(it) }
 
+                }
             }
 
             override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {

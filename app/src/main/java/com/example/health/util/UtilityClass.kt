@@ -19,6 +19,7 @@ class UtilityClass {
         const val doctorId="6TglfkDls7blRAY4MqW2iGGmpMI2"
         const val dayInMills=86400000
         const val user="users"
+        const val booked="Booked"
 
 
     }

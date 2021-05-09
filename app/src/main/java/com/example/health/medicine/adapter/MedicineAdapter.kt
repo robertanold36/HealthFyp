@@ -15,13 +15,14 @@ import kotlin.math.roundToInt
 class MedicineAdapter(var context: Context) :
     RecyclerView.Adapter<MedicineAdapter.MedicineViewHolder>() {
 
-    private var dataList = mutableListOf<Medicine>()
+    private var dataList:MutableList<Medicine> = mutableListOf<Medicine>()
 
     fun setList(data: MutableList<Medicine>) {
         dataList = data
     }
 
     inner class MedicineViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+
         fun bindView(medicine: Medicine) {
             val timeTaken =
                 totalDaysTime(medicine.tabletsInterval, medicine.doze, medicine.tabletsQuantity)

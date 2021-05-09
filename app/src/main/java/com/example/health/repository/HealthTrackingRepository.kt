@@ -2,14 +2,15 @@ package com.example.health.repository
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
-import com.example.health.model.DailyTrack
-import com.example.health.model.Doctor
-import com.example.health.model.Medicine
-import com.example.health.model.PatientModel
+import com.example.health.model.*
 import com.example.health.tracker.listener.HealthTrackingEventListener
 import com.example.health.util.UtilityClass
 import com.example.health.util.UtilityClass.Companion.user
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.ChildEventListener
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.firestore.FirebaseFirestore
 
 
@@ -19,15 +20,16 @@ class HealthTrackingRepository(private val healthTrackingDatabase: HealthTrackin
         FirebaseFirestore.getInstance()
     }
 
-    private val firebaseAuth:FirebaseAuth by lazy {
+    private val firebaseAuth: FirebaseAuth by lazy {
         FirebaseAuth.getInstance()
     }
 
-    private var days: MutableLiveData<List<String>> = MutableLiveData()
-    private var timeData: MutableLiveData<MutableList<String>> = MutableLiveData()
+    private var appointmentList: MutableLiveData<List<Appointment>> = MutableLiveData()
+    private var timeData: MutableLiveData<List<String>> = MutableLiveData()
     private var patientModelData: MutableLiveData<PatientModel> = MutableLiveData()
     private var doctorData: MutableLiveData<Doctor> = MutableLiveData()
-    var healthTrackingEventListener:HealthTrackingEventListener?=null
+    var healthTrackingEventListener: HealthTrackingEventListener? = null
+    private var count: MutableLiveData<Int> = MutableLiveData()
 
 
     suspend fun insertDailyData(dailyTrack: DailyTrack) =
@@ -36,9 +38,9 @@ class HealthTrackingRepository(private val healthTrackingDatabase: HealthTrackin
     fun getAllDailyData() = healthTrackingDatabase.healthTrackingDao().getAllDailyTrack()
 
 
-    fun getAllDays(): MutableLiveData<List<String>> {
+    fun getAllAvailableAppointment(): MutableLiveData<List<Appointment>> {
 
-        val dataDays = mutableListOf<String>()
+        val dataAppointment = mutableListOf<Appointment>()
 
         firebaseFirestore.collection(UtilityClass.appointment)
             .document(UtilityClass.doctorId)
@@ -46,32 +48,18 @@ class HealthTrackingRepository(private val healthTrackingDatabase: HealthTrackin
             .whereEqualTo("status", "Available")
             .get().addOnSuccessListener {
                 for (document in it) {
-                    val dayName = document.getString("DayName")
-                    dataDays.add(dayName!!)
+                    val dayName = document.getString("dayName")
+                    val time=document.getString("time")
+                    val status=document.getString("status")
+                    val appointment=Appointment(dayName!!,time!!,status!!)
+                    dataAppointment.add(appointment)
                 }
-                days.value = dataDays.distinct()
+                appointmentList.value = dataAppointment
+
             }
-        return days
+        return appointmentList
     }
 
-    fun getAllTimeAvailable(dayName: String): MutableLiveData<MutableList<String>> {
-
-        val timeList: MutableList<String> = mutableListOf()
-
-        firebaseFirestore.collection(UtilityClass.appointment)
-            .document(UtilityClass.doctorId)
-            .collection(UtilityClass.appointmentList)
-            .whereEqualTo("DayName", dayName)
-            .whereEqualTo("status", "Available").get()
-            .addOnSuccessListener { dataList ->
-                for (data in dataList) {
-                    val dataTime = data.getString("Time")
-                    timeList.add(dataTime!!)
-                }
-                timeData.value = timeList
-            }
-        return timeData
-    }
 
     fun getAllMedicine() = healthTrackingDatabase.healthTrackingDao().getAllMedicineData()
 
@@ -81,12 +69,12 @@ class HealthTrackingRepository(private val healthTrackingDatabase: HealthTrackin
 
     fun getPatientModel(): MutableLiveData<PatientModel> {
         healthTrackingEventListener?.onLoading()
-        val uid=firebaseAuth.uid?:""
+        val uid = firebaseAuth.uid ?: ""
         firebaseFirestore.collection("patient").document(uid)
             .get().addOnSuccessListener {
                 val patientModel = it.toObject(PatientModel::class.java)
                 patientModelData.value = patientModel
-                Log.e("Testing",patientModel.toString())
+                Log.e("Testing", patientModel.toString())
             }.addOnFailureListener {
                 Log.e("Testing", it.toString())
                 healthTrackingEventListener?.onFail("Fail to Access your Details")
@@ -95,15 +83,14 @@ class HealthTrackingRepository(private val healthTrackingDatabase: HealthTrackin
     }
 
     fun getDoctorDetails(hospitalName: String): MutableLiveData<Doctor> {
-        var doctor=Doctor()
+        var doctor = Doctor()
         healthTrackingEventListener?.onLoading()
         firebaseFirestore.collection(user).whereEqualTo("hospital", hospitalName).get()
             .addOnSuccessListener {
-               if(it.isEmpty){
-                   healthTrackingEventListener?.onFail("Doctor details not found")
-               }
-                else{
-                    healthTrackingEventListener?.onSuccess()
+                if (it.isEmpty) {
+                    healthTrackingEventListener?.onFail("Doctor details not found")
+                } else {
+
                     for (document in it) {
                         val doctorId = document.id
                         val phoneNumber = document.getString("PhoneNumber")
@@ -121,6 +108,71 @@ class HealthTrackingRepository(private val healthTrackingDatabase: HealthTrackin
                 healthTrackingEventListener?.onFail("Fail to access doctor details")
             }
         return doctorData
+    }
+
+    fun counterMessage(senderId: String, receiverId: String): MutableLiveData<Int> {
+        var counter = 0
+        FirebaseDatabase.getInstance().getReference("/messages/${senderId}/${receiverId}")
+            .addChildEventListener(
+                object : ChildEventListener {
+                    override fun onChildAdded(
+                        snapshot: DataSnapshot,
+                        previousChildName: String?
+                    ) {
+
+                        val chat = snapshot.getValue(ChatModel::class.java)
+                        healthTrackingEventListener?.onSuccess()
+                        if (chat?.senderId != senderId && chat?.read == false) {
+                            counter += 1
+                        }
+                        count.value = counter
+                    }
+
+                    override fun onChildChanged(
+                        snapshot: DataSnapshot,
+                        previousChildName: String?
+                    ) {
+
+                    }
+
+                    override fun onChildRemoved(snapshot: DataSnapshot) {
+
+                    }
+
+                    override fun onChildMoved(
+                        snapshot: DataSnapshot,
+                        previousChildName: String?
+                    ) {
+
+                    }
+
+                    override fun onCancelled(error: DatabaseError) {
+
+                    }
+                })
+        return count
+    }
+
+    fun requestAppointment(appointmentRequest: AppointmentRequest) {
+        healthTrackingEventListener?.onLoading()
+        firebaseFirestore.collection(UtilityClass.appointment)
+            .document(UtilityClass.doctorId)
+            .collection(UtilityClass.appointmentList).whereEqualTo("time", appointmentRequest.time)
+            .whereEqualTo("dayName", appointmentRequest.dayName)
+            .get().addOnSuccessListener {
+                for (document in it) {
+                    firebaseFirestore.collection(UtilityClass.appointment)
+                        .document(UtilityClass.doctorId)
+                        .collection(UtilityClass.appointmentList).document(document.id)
+                        .update("status", "Unavailable").addOnSuccessListener {
+                            healthTrackingEventListener?.onSuccess()
+                        }.addOnFailureListener {
+                            healthTrackingEventListener?.onFail("Fail to book appointment")
+                        }
+                }
+            }.addOnFailureListener {
+                healthTrackingEventListener?.onFail("Fail to access the appointment data")
+            }
     }
 
 }

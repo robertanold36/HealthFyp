@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.health.R
 import com.example.health.appointment.adapter.AppointmentListAdapter
+import com.example.health.model.AppointmentList
 import com.example.health.viewmodel.HealthTrackingViewModel
 
 
@@ -51,14 +52,15 @@ class AppointmentFragment : Fragment() {
 
         adapter.setOnClickListener {
             val bundle = Bundle().apply {
-                putString("DayName", it)
+                val appointmentList = AppointmentList()
+                appointmentList.addAll(it)
+                putParcelable("appointmentList",appointmentList)
             }
             findNavController().navigate(
                 R.id.action_appointmentFragment_to_appointmentAvailableTime,
                 bundle
             )
         }
-
 
         val recyclerView = view.findViewById<RecyclerView>(R.id.recyclerview_appointment)
         val linearLayoutManager = LinearLayoutManager(

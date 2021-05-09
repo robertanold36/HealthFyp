@@ -6,12 +6,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.health.model.Doctor
 import com.example.health.tracker.listener.HealthTrackingEventListener
 import com.example.health.viewmodel.HealthTrackingViewModel
+import com.google.firebase.auth.FirebaseAuth
 import de.hdodenhof.circleimageview.CircleImageView
 
 
@@ -20,10 +22,12 @@ class HomeFragment : Fragment(), HealthTrackingEventListener {
     private lateinit var healthTrackingViewModel: HealthTrackingViewModel
     private lateinit var doctorDetails: Doctor
     private var pBar: ProgressBar? = null
-    private var profileImage:CircleImageView?=null
-    private var nameDoctor:TextView?=null
-    private var doctorName:TextView?=null
-    private var chatBtn:ImageButton?=null
+    private var profileImage: CircleImageView? = null
+    private var nameDoctor: TextView? = null
+    private var doctorName: TextView? = null
+    private var chatBtn: ImageButton? = null
+    private var countMsg: TextView? = null
+    private var cardBadge: CardView? = null
 
 
     override fun onCreateView(
@@ -42,24 +46,34 @@ class HomeFragment : Fragment(), HealthTrackingEventListener {
             .get(HealthTrackingViewModel::class.java)
         pBar = view.findViewById(R.id.progressBar6)
 
-        healthTrackingViewModel.repository.healthTrackingEventListener=this
+        healthTrackingViewModel.repository.healthTrackingEventListener = this
 
-         profileImage = view.findViewById(R.id.profile_image)
-         nameDoctor = view.findViewById(R.id.textView12)
-         doctorName = view.findViewById(R.id.doctorName)
-         chatBtn = view.findViewById(R.id.btnChat)
+        profileImage = view.findViewById(R.id.profile_image)
+        nameDoctor = view.findViewById(R.id.textView12)
+        doctorName = view.findViewById(R.id.doctorName)
+        chatBtn = view.findViewById(R.id.btnChat)
+        cardBadge = view.findViewById(R.id.card_badge)
+        countMsg = view.findViewById(R.id.msg_counter)
 
+
+        val uid = FirebaseAuth.getInstance().uid
 
         val horizontalScrollView =
             view.findViewById<HorizontalScrollView>(R.id.horizontalScrollView)
-        horizontalScrollView.isHorizontalScrollBarEnabled = false;
+        horizontalScrollView.isHorizontalScrollBarEnabled = false
 
         healthTrackingViewModel.getHospitalName().observe(requireActivity(), { pModel ->
             healthTrackingViewModel.getDoctorDetails(pModel.hospitalName)
                 .observe(requireActivity(), { doctor ->
-                    Log.e("Testing",doctor.toString())
+                    Log.e("Testing", doctor.toString())
                     doctorDetails = doctor
                     doctorName?.text = doctorDetails.name
+
+                    healthTrackingViewModel.getCountMessage(uid!!, doctor.doctorId)
+                        .observe(requireActivity(), {
+                            countMsg!!.text = it.toString()
+                        })
+
                 })
         })
 
@@ -87,8 +101,9 @@ class HomeFragment : Fragment(), HealthTrackingEventListener {
     override fun onSuccess() {
         pBar?.visibility = View.INVISIBLE
         profileImage?.visibility = View.VISIBLE
-        nameDoctor?.visibility = View.VISIBLE
         chatBtn?.visibility = View.VISIBLE
+        nameDoctor?.visibility = View.VISIBLE
+        cardBadge?.visibility = View.VISIBLE
     }
 
     override fun onFail(message: String) {
@@ -99,4 +114,5 @@ class HomeFragment : Fragment(), HealthTrackingEventListener {
     override fun onLoading() {
         pBar?.visibility = View.VISIBLE
     }
+
 }

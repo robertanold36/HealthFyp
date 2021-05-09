@@ -8,19 +8,33 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.health.R
 import com.example.health.model.Appointment
+import com.example.health.model.AppointmentRequest
+import com.example.health.util.UtilityClass.Companion.booked
+import com.google.android.material.chip.Chip
 
-class SubAppointmentListTimeAdapter(var context:Context) :
+class SubAppointmentListTimeAdapter(var context: Context) :
     RecyclerView.Adapter<SubAppointmentListTimeAdapter.AppointmentListTimeViewHolder>() {
 
-    private var dataList= mutableListOf<String>()
-    fun setList(data: MutableList<String>){
-        dataList=data
+    private var dataList = listOf<Appointment>()
+    fun setList(data: List<Appointment>) {
+        dataList = data
+
     }
 
+    var onItemClickListener: ((AppointmentRequest) -> Unit)? = null
 
     inner class AppointmentListTimeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun bindView(time: String) {
-            itemView.findViewById<TextView>(R.id.app_time).text=time
+        fun bindView(appointment: Appointment) {
+            itemView.findViewById<TextView>(R.id.app_time).text = appointment.time
+            itemView.findViewById<Chip>(R.id.request_appointment).setOnClickListener {
+                onItemClickListener?.invoke(
+                    AppointmentRequest(
+                        appointment.dayName,
+                        appointment.time
+                    )
+                )
+                (it as Chip).text = booked
+            }
         }
 
     }
@@ -35,21 +49,17 @@ class SubAppointmentListTimeAdapter(var context:Context) :
     }
 
     override fun onBindViewHolder(holder: AppointmentListTimeViewHolder, position: Int) {
-        val appointmentDetails: String =dataList[position]
+        val appointmentDetails: Appointment = dataList[position]
         holder.bindView(appointmentDetails)
 
     }
 
     override fun getItemCount(): Int {
-        return if (dataList.size > 0) {
+        return if (dataList.isNotEmpty()) {
             dataList.size
         } else {
             0
         }
     }
 
-     private var onItemClickListener: ((Appointment) -> Unit)? = null
-     fun setOnClickListener(listener:(Appointment)->Unit){
-         onItemClickListener=listener
-     }
 }

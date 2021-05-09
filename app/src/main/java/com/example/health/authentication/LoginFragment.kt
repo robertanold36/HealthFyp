@@ -52,18 +52,20 @@ class LoginFragment : Fragment(), AuthenticationListener {
             ) {
                 Toast.makeText(requireActivity(), "Please fill all fields", Toast.LENGTH_SHORT)
                     .show()
-            }else{
-                authenticationViewModel.login(eMail,passWord)
+            } else {
+                authenticationViewModel.login(eMail, passWord)
             }
         }
 
     }
 
     override fun onSuccess() {
+
         pBar?.visibility = View.INVISIBLE
         val intent = Intent(requireActivity(), HomeActivity::class.java)
         startActivity(intent)
         activity?.finish()
+
     }
 
     override fun onLoading() {
@@ -74,4 +76,6 @@ class LoginFragment : Fragment(), AuthenticationListener {
         pBar?.visibility = View.INVISIBLE
         Toast.makeText(requireActivity(), message, Toast.LENGTH_SHORT).show()
     }
+
+
 }
