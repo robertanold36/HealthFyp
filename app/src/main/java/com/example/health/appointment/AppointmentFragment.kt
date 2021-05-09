@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -12,14 +13,16 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.health.R
 import com.example.health.appointment.adapter.AppointmentListAdapter
-import com.example.health.model.AppointmentList
+import com.example.health.tracker.listener.HealthTrackingEventListener
+import com.example.health.util.UtilityClass.Companion.getPrefs
 import com.example.health.viewmodel.HealthTrackingViewModel
 
 
-class AppointmentFragment : Fragment() {
+class AppointmentFragment : Fragment(), HealthTrackingEventListener {
 
     private lateinit var adapter: AppointmentListAdapter
     private lateinit var healthTrackingViewModel: HealthTrackingViewModel
+    private lateinit var pBar:ProgressBar
 
 
     override fun onCreateView(
@@ -35,26 +38,27 @@ class AppointmentFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val progressBar = view.findViewById<ProgressBar>(R.id.progressBar3).apply {
-            visibility = View.VISIBLE
-        }
+         pBar = view.findViewById(R.id.progressBar3)
+
         adapter = AppointmentListAdapter(requireActivity())
         healthTrackingViewModel = ViewModelProvider(this)
             .get(HealthTrackingViewModel::class.java)
 
-        healthTrackingViewModel.getAllDaysData().observe(requireActivity(), {
+        healthTrackingViewModel.repository.healthTrackingEventListener=this
+
+
+        val patientModel=getPrefs(requireContext())
+
+
+        healthTrackingViewModel.getAllDaysData(patientModel.doctorId).observe(requireActivity(), {
 
             adapter.setList(it)
             adapter.notifyDataSetChanged()
-            progressBar.visibility = View.INVISIBLE
-
         })
 
         adapter.setOnClickListener {
             val bundle = Bundle().apply {
-                val appointmentList = AppointmentList()
-                appointmentList.addAll(it)
-                putParcelable("appointmentList",appointmentList)
+                putString("appointmentDayName", it)
             }
             findNavController().navigate(
                 R.id.action_appointmentFragment_to_appointmentAvailableTime,
@@ -71,5 +75,18 @@ class AppointmentFragment : Fragment() {
 
     }
 
+    override fun onSuccess() {
+        pBar.visibility=View.INVISIBLE
+
+    }
+
+    override fun onFail(message: String) {
+        pBar.visibility=View.INVISIBLE
+        Toast.makeText(requireActivity(), message, Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onLoading() {
+       pBar.visibility=View.VISIBLE
+    }
 
 }

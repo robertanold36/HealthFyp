@@ -1,22 +1,29 @@
 package com.example.health.authentication
 
+import android.content.Context.MODE_PRIVATE
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.core.content.edit
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.health.HomeActivity
 import com.example.health.R
 import com.example.health.authentication.viewmodel.AuthenticationViewModel
+import com.example.health.util.UtilityClass.Companion.savePrefs
+import com.google.gson.Gson
 
-class LoginFragment : Fragment(), AuthenticationListener {
+
+class   LoginFragment : Fragment(), AuthenticationListener {
 
     private lateinit var authenticationViewModel: AuthenticationViewModel
     private var pBar: ProgressBar? = null
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -59,8 +66,11 @@ class LoginFragment : Fragment(), AuthenticationListener {
 
     }
 
-    override fun onSuccess() {
+    override fun onSuccess(data:Any?) {
 
+        if (data != null) {
+            savePrefs(requireContext(),data)
+        }
         pBar?.visibility = View.INVISIBLE
         val intent = Intent(requireActivity(), HomeActivity::class.java)
         startActivity(intent)

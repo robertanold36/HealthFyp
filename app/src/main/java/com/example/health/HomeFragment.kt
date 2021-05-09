@@ -1,5 +1,6 @@
 package com.example.health
 
+
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -12,7 +13,9 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.health.model.Doctor
 import com.example.health.tracker.listener.HealthTrackingEventListener
+import com.example.health.util.UtilityClass.Companion.getPrefs
 import com.example.health.viewmodel.HealthTrackingViewModel
+import com.google.android.material.card.MaterialCardView
 import com.google.firebase.auth.FirebaseAuth
 import de.hdodenhof.circleimageview.CircleImageView
 
@@ -28,6 +31,11 @@ class HomeFragment : Fragment(), HealthTrackingEventListener {
     private var chatBtn: ImageButton? = null
     private var countMsg: TextView? = null
     private var cardBadge: CardView? = null
+    private var name: TextView? = null
+    private var appTime: TextView? = null
+    private var cardAppTime:MaterialCardView?=null
+
+
 
 
     override fun onCreateView(
@@ -47,6 +55,7 @@ class HomeFragment : Fragment(), HealthTrackingEventListener {
         pBar = view.findViewById(R.id.progressBar6)
 
         healthTrackingViewModel.repository.healthTrackingEventListener = this
+        val patientModel = getPrefs(requireContext())
 
         profileImage = view.findViewById(R.id.profile_image)
         nameDoctor = view.findViewById(R.id.textView12)
@@ -54,7 +63,13 @@ class HomeFragment : Fragment(), HealthTrackingEventListener {
         chatBtn = view.findViewById(R.id.btnChat)
         cardBadge = view.findViewById(R.id.card_badge)
         countMsg = view.findViewById(R.id.msg_counter)
+        name = view.findViewById(R.id.textView5)
+        appTime=view.findViewById(R.id.appointment_time)
+        name?.text = patientModel.name
+        cardAppTime=view.findViewById(R.id.materialCardView)
 
+
+        Log.e("uid", FirebaseAuth.getInstance().uid.toString())
 
         val uid = FirebaseAuth.getInstance().uid
 
@@ -62,20 +77,30 @@ class HomeFragment : Fragment(), HealthTrackingEventListener {
             view.findViewById<HorizontalScrollView>(R.id.horizontalScrollView)
         horizontalScrollView.isHorizontalScrollBarEnabled = false
 
-        healthTrackingViewModel.getHospitalName().observe(requireActivity(), { pModel ->
-            healthTrackingViewModel.getDoctorDetails(pModel.hospitalName)
-                .observe(requireActivity(), { doctor ->
-                    Log.e("Testing", doctor.toString())
-                    doctorDetails = doctor
-                    doctorName?.text = doctorDetails.name
 
-                    healthTrackingViewModel.getCountMessage(uid!!, doctor.doctorId)
-                        .observe(requireActivity(), {
-                            countMsg!!.text = it.toString()
-                        })
+        healthTrackingViewModel.getDoctorDetails(getPrefs(requireContext()).doctorId)
+            .observe(requireActivity(), { doctor ->
+                doctorDetails = doctor
+                doctorName?.text = doctorDetails.name
 
-                })
-        })
+                healthTrackingViewModel.getCountMessage(uid!!, doctor.doctorId)
+                    .observe(requireActivity(), {
+                        countMsg!!.text = it.toString()
+                    })
+
+            })
+
+        healthTrackingViewModel.checkAppointmentRequested(uid!!, patientModel.doctorId)
+            .observe(requireActivity(), {
+                if (it!=null) {
+                    val time=it.time
+                    val day=it.dayName
+                    appTime!!.text = getString(R.string.app_time,time,day)
+                    cardAppTime!!.visibility=View.VISIBLE
+                }else{
+                    cardAppTime!!.visibility=View.INVISIBLE
+                }
+            })
 
 
         view.findViewById<Button>(R.id.trackBtn).setOnClickListener {
@@ -91,8 +116,9 @@ class HomeFragment : Fragment(), HealthTrackingEventListener {
         }
 
         chatBtn?.setOnClickListener {
+            Log.e("TestingDoctor", doctorDetails.toString())
             val bundle = Bundle().apply {
-                putSerializable("doctorDetails", doctorDetails)
+                putParcelable("doctorDetails", doctorDetails)
             }
             findNavController().navigate(R.id.action_homeFragment_to_chatActivity, bundle)
         }
@@ -103,7 +129,10 @@ class HomeFragment : Fragment(), HealthTrackingEventListener {
         profileImage?.visibility = View.VISIBLE
         chatBtn?.visibility = View.VISIBLE
         nameDoctor?.visibility = View.VISIBLE
-        cardBadge?.visibility = View.VISIBLE
+        if (countMsg?.text != "0") {
+            cardBadge?.visibility = View.VISIBLE
+        }
+
     }
 
     override fun onFail(message: String) {

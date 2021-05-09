@@ -1,12 +1,15 @@
 package com.example.health.authentication
 
+import android.content.Context.MODE_PRIVATE
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.core.content.edit
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs
@@ -14,6 +17,8 @@ import com.example.health.HomeActivity
 import com.example.health.R
 import com.example.health.authentication.viewmodel.AuthenticationViewModel
 import com.example.health.model.PatientModel
+import com.example.health.util.UtilityClass.Companion.savePrefs
+import com.google.gson.Gson
 import java.util.*
 
 
@@ -35,8 +40,8 @@ class RegisterFragment : Fragment(), AuthenticationListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val hospitalName = args.hospitalName
-        Log.e("Testing", hospitalName)
+        val doctorDetails = args.doctorDetails
+        Log.e("Testing", doctorDetails.toString())
         val submitBtn = view.findViewById<Button>(R.id.signup)
 
         authenticationViewModel = ViewModelProvider(this)
@@ -72,8 +77,9 @@ class RegisterFragment : Fragment(), AuthenticationListener {
                     fullName,
                     eMail,
                     diseaseSelected,
-                    hospitalName,
-                    date
+                    doctorDetails.hospital,
+                    date,
+                    doctorDetails.doctorId
                 )
                 authenticationViewModel.createUserAccount(patientModel,password)
             }
@@ -82,7 +88,11 @@ class RegisterFragment : Fragment(), AuthenticationListener {
 
     }
 
-    override fun onSuccess() {
+    override fun onSuccess(data:Any?) {
+
+        savePrefs(
+            requireContext(),data!!
+        )
         pBar?.visibility = View.INVISIBLE
         val intent=Intent(requireActivity(),HomeActivity::class.java)
         startActivity(intent)

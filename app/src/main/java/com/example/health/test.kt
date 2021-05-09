@@ -13,7 +13,4 @@ fun main(){
         return ((x%2)==0)
     }
 
-    val result=data { test(10) }
-    print(test1.invoke(10))
-
 }

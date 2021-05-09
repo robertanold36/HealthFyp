@@ -10,6 +10,7 @@
     <string name="signup">REGISTER</string>
     <string name="email">E-mail</string>
     <string name="password">password</string>
+    <string name="app_time">%1$s %2$s</string>
 
     <string-array name="disease">
         <item>Diabetes</item>

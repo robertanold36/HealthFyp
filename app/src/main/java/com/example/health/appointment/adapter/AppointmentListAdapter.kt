@@ -27,11 +27,7 @@ class AppointmentListAdapter(var context: Context) :
             itemView.findViewById<TextView>(R.id.app_day).text = appointmentDayName
             itemView.setOnClickListener {
                 onItemClickListener?.let {
-
-                    val data: List<Appointment> =
-                        dataList.filter { it.dayName == appointmentDayName }
-
-                    it(data)
+                    it(appointmentDayName)
                 }
             }
         }
@@ -59,13 +55,13 @@ class AppointmentListAdapter(var context: Context) :
         }
     }
 
-    private var onItemClickListener: ((List<Appointment>) -> Unit)? = null
-    fun setOnClickListener(listener: (List<Appointment>) -> Unit) {
+    private var onItemClickListener: ((String) -> Unit)? = null
+    fun setOnClickListener(listener: (String) -> Unit) {
         onItemClickListener = listener
     }
 
     private fun getAllDays(data:List<Appointment>): List<String> {
-        for (day in dataList){
+        for (day in data){
             days.add(day.dayName)
         }
 

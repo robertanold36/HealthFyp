@@ -1,11 +1,13 @@
 package com.example.health.model
 
-import java.io.Serializable
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
 
+@Parcelize
 data class Doctor(
     var name: String="",
     var hospital: String="",
     var phoneNumber: String="",
     var professional: String="",
     var doctorId:String=""
-):Serializable
+):Parcelable

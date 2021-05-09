@@ -22,9 +22,10 @@
         <action
             android:id="@+id/action_registerFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
+
         <argument
-            android:name="hospitalName"
-            app:argType="string" />
+            android:name="doctorDetails"
+            app:argType="com.example.health.model.Doctor" />
     </fragment>
     <fragment
         android:id="@+id/hospitalSelection"

@@ -59,14 +59,11 @@ class ChatActivity : AppCompatActivity() {
 
         sendBtn?.setOnClickListener {
             val message = messageText?.text.toString()
-            if(message.isEmpty()){
-
-            }else{
+            if (message.isNotEmpty()) {
                 sendMsg(message)
                 messageText?.text?.clear()
                 rvChat?.scrollToPosition(adapter.itemCount - 1)
             }
-
         }
     }
 
@@ -106,7 +103,9 @@ class ChatActivity : AppCompatActivity() {
             }
 
             override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
-
+                if(!snapshot.exists()){
+                    return
+                }
             }
 
             override fun onChildRemoved(snapshot: DataSnapshot) {

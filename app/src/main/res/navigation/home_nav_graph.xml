@@ -195,8 +195,8 @@
         tools:layout="@layout/fragment_appointment_available_time" >
 
         <argument
-            android:name="appointmentList"
-            app:argType="com.example.health.model.AppointmentList" />
+            android:name="appointmentDayName"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/medicineAddFragment"
@@ -216,6 +216,7 @@
         android:name="com.example.health.chat.ChatActivity"
         android:label="activity_chat"
         tools:layout="@layout/activity_chat" >
+
         <argument
             android:name="doctorDetails"
             app:argType="com.example.health.model.Doctor" />

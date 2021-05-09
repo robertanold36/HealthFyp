@@ -4,17 +4,18 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
-import android.widget.ListView
 import android.widget.ProgressBar
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.RecyclerView
 import com.example.health.R
+import com.example.health.authentication.adapter.HospitalListAdapter
 import com.example.health.authentication.viewmodel.AuthenticationViewModel
 
 class HospitalSelection : Fragment() {
     private lateinit var authenticationViewModel: AuthenticationViewModel
+    private lateinit var adapter:HospitalListAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -29,26 +30,26 @@ class HospitalSelection : Fragment() {
         val pBar = view.findViewById<ProgressBar>(R.id.progressBar5).apply {
             visibility = View.VISIBLE
         }
-        val lisView = view.findViewById<ListView>(R.id.hospital_list)
-        val adapter = ArrayAdapter<String>(requireActivity(), android.R.layout.simple_list_item_1)
+        adapter = HospitalListAdapter(requireActivity())
+        val rvHospitalList = view.findViewById<RecyclerView>(R.id.hospital_list)
 
         authenticationViewModel = ViewModelProvider(this)
             .get(AuthenticationViewModel::class.java)
         authenticationViewModel.getAllHospitalNames().observe(requireActivity(), {
-            adapter.addAll(it.distinct())
+            adapter.setList(it)
             adapter.notifyDataSetChanged()
             pBar.visibility = View.INVISIBLE
         })
 
-        lisView.adapter = adapter
+        rvHospitalList.adapter=adapter
 
-        lisView.setOnItemClickListener { _, _, position, _ ->
-            val hospitalName: String = lisView.getItemAtPosition(position).toString()
+        adapter.onItemClickListener = {
             val bundle = Bundle().apply {
-                putString("hospitalName", hospitalName)
+                putParcelable("doctorDetails", it)
             }
             findNavController().navigate(R.id.action_hospitalSelection_to_registerFragment, bundle)
         }
 
     }
+
 }

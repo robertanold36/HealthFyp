@@ -3,7 +3,7 @@ package com.example.health.viewmodel
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
+import com.example.health.model.Appointment
 import com.example.health.model.AppointmentRequest
 import com.example.health.model.DailyTrack
 import com.example.health.model.Medicine
@@ -49,18 +49,28 @@ class HealthTrackingViewModel(app: Application) : AndroidViewModel(app) {
         return repository.getAllDailyData()
     }
 
-    fun getAllDaysData()=repository.getAllAvailableAppointment()
-
-    fun getHospitalName() = repository.getPatientModel()
+    fun getAllDaysData(doctorId: String) = repository.getAllAvailableAppointment(doctorId)
 
     fun getDoctorDetails(hospitalName: String) = repository.getDoctorDetails(hospitalName)
 
     fun getCountMessage(senderId: String, receiverId: String) =
         repository.counterMessage(senderId, receiverId)
 
-    fun requestAppointment(appointmentRequest: AppointmentRequest){
-        repository.requestAppointment(appointmentRequest)
+    fun requestAppointment(
+        appointment: Appointment,
+        doctorId: String,
+        appointmentRequest: AppointmentRequest
+    ) {
+        repository.requestAppointment(appointment, doctorId, appointmentRequest)
     }
+
+    fun getAvailableAppointmentTime(
+        day: String,
+        doctorId: String
+    ) = repository.getAvailableAppointmentTime(day, doctorId)
+
+    fun checkAppointmentRequested(uid: String, doctorId: String) =
+        repository.checkAppointedRequested(uid, doctorId)
 
 
     override fun onCleared() {

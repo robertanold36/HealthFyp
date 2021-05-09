@@ -8,7 +8,6 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.health.R
 import com.example.health.model.Appointment
-import com.example.health.model.AppointmentRequest
 import com.example.health.util.UtilityClass.Companion.booked
 import com.google.android.material.chip.Chip
 
@@ -21,17 +20,14 @@ class SubAppointmentListTimeAdapter(var context: Context) :
 
     }
 
-    var onItemClickListener: ((AppointmentRequest) -> Unit)? = null
+    var onItemClickListener: ((Appointment) -> Unit)? = null
 
     inner class AppointmentListTimeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bindView(appointment: Appointment) {
             itemView.findViewById<TextView>(R.id.app_time).text = appointment.time
             itemView.findViewById<Chip>(R.id.request_appointment).setOnClickListener {
                 onItemClickListener?.invoke(
-                    AppointmentRequest(
-                        appointment.dayName,
-                        appointment.time
-                    )
+                   appointment
                 )
                 (it as Chip).text = booked
             }
