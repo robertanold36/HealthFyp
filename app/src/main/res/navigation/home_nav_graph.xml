@@ -14,14 +14,17 @@
             android:id="@+id/action_homeFragment_to_statisticsFragment"
             app:destination="@id/statisticsFragment" />
         <action
-            android:id="@+id/action_homeFragment_to_medicineAddFragment"
-            app:destination="@id/medicineAddFragment" />
-        <action
-            android:id="@+id/action_homeFragment_to_medicineFragment"
-            app:destination="@id/medicineFragment" />
-        <action
             android:id="@+id/action_homeFragment_to_chatActivity"
             app:destination="@id/chatActivity" />
+        <action
+            android:id="@+id/action_homeFragment_to_educationFragment"
+            app:destination="@id/educationFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_dailyExerciseFragment"
+            app:destination="@id/dailyExerciseFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_dietFragment"
+            app:destination="@id/dietFragment" />
     </fragment>
     <fragment
         android:id="@+id/statisticsFragment"
@@ -202,15 +205,15 @@
         android:id="@+id/medicineAddFragment"
         android:name="com.example.health.medicine.MedicineAddFragment"
         android:label="fragment_add_medicine"
-        tools:layout="@layout/fragment_add_medicine" >
-        <action
-            android:id="@+id/action_medicineAddFragment_to_homeFragment"
-            app:destination="@id/homeFragment" />
-    </fragment>
+        tools:layout="@layout/fragment_add_medicine" />
     <fragment
         android:id="@+id/medicineFragment"
         android:name="com.example.health.medicine.MedicineFragment"
-        android:label="MedicineFragment" />
+        android:label="MedicineFragment" >
+        <action
+            android:id="@+id/action_medicineFragment_to_medicineAddFragment"
+            app:destination="@id/medicineAddFragment" />
+    </fragment>
     <activity
         android:id="@+id/chatActivity"
         android:name="com.example.health.chat.ChatActivity"
@@ -221,4 +224,24 @@
             android:name="doctorDetails"
             app:argType="com.example.health.model.Doctor" />
     </activity>
+    <fragment
+        android:id="@+id/analysisFragment"
+        android:name="com.example.health.analysis.AnalysisFragment"
+        android:label="fragment_analysis"
+        tools:layout="@layout/fragment_analysis" />
+    <fragment
+        android:id="@+id/educationFragment"
+        android:name="com.example.health.education.EducationFragment"
+        android:label="fragment_education"
+        tools:layout="@layout/fragment_education" />
+    <fragment
+        android:id="@+id/dailyExerciseFragment"
+        android:name="com.example.health.education.DailyExerciseFragment"
+        android:label="fragment_daily_exercise"
+        tools:layout="@layout/fragment_daily_exercise" />
+    <fragment
+        android:id="@+id/dietFragment"
+        android:name="com.example.health.education.DietFragment"
+        android:label="fragment_diet"
+        tools:layout="@layout/fragment_diet" />
 </navigation>

@@ -101,7 +101,7 @@ class MedicineAddFragment : Fragment() {
                 )
 
                 healthTrackingViewModel.insertMedicineData(medicine)
-                findNavController().navigate(R.id.action_medicineAddFragment_to_homeFragment)
+                findNavController().popBackStack()
             }
         }
 

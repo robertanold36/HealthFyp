@@ -31,7 +31,7 @@ class ChatActivity : AppCompatActivity() {
     }
 
     private val senderId = firebaseAuth.uid ?: ""
-    val time = Calendar.getInstance().time.toString()
+    val time = Calendar.getInstance().time
     private val adapter = GroupAdapter<ViewHolder>()
     private var rvChat: RecyclerView? = null
     private var sendBtn: ImageButton? = null
@@ -93,9 +93,9 @@ class ChatActivity : AppCompatActivity() {
                     Log.e("Testing",p0.toString())
                     p0.getValue(ChatModel::class.java).also { chat = it }
                     if (chat?.senderId == senderId) {
-                        chat!!.message?.let { ChatToAdapter(it) }?.let { adapter.add(it) }
+                       adapter.add(ChatToAdapter(chat!!))
                     } else {
-                        chat!!.message?.let { ChatFromAdapter(it) }?.let { adapter.add(it) }
+                        adapter.add(ChatFromAdapter(chat!!))
                     }
 
                     rvChat?.scrollToPosition(adapter.itemCount - 1)
@@ -110,11 +110,15 @@ class ChatActivity : AppCompatActivity() {
 
             override fun onChildRemoved(snapshot: DataSnapshot) {
                 chat=snapshot.getValue(ChatModel::class.java)
-                if(chat?.senderId==senderId){
-                    chat!!.message?.let { ChatFromAdapter(it) }?.let { adapter.remove(it) }
-                }else{
-                    chat!!.message?.let { ChatToAdapter(it) }?.let { adapter.remove(it) }
+                
+                if (chat?.senderId == senderId) {
+                    adapter.notifyItemRemoved(adapter.getAdapterPosition(ChatToAdapter(chat!!)))
 
+
+                } else {
+                    adapter.notifyItemRemoved(adapter.getAdapterPosition(ChatFromAdapter(chat!!)))
+
+                    reference.keepSynced(true)
                 }
             }
 

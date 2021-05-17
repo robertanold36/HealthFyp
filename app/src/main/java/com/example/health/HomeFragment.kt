@@ -36,8 +36,6 @@ class HomeFragment : Fragment(), HealthTrackingEventListener {
     private var cardAppTime:MaterialCardView?=null
 
 
-
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -108,11 +106,15 @@ class HomeFragment : Fragment(), HealthTrackingEventListener {
         }
 
         view.findViewById<Button>(R.id.btnDiet)?.setOnClickListener {
-            findNavController().navigate(R.id.action_homeFragment_to_medicineAddFragment)
+            findNavController().navigate(R.id.action_homeFragment_to_dietFragment)
         }
 
         view.findViewById<Button>(R.id.btnExercise).setOnClickListener {
-            findNavController().navigate(R.id.action_homeFragment_to_medicineFragment)
+            findNavController().navigate(R.id.action_homeFragment_to_dailyExerciseFragment)
+        }
+
+        view.findViewById<Button>(R.id.btnEducation).setOnClickListener {
+            findNavController().navigate(R.id.action_homeFragment_to_educationFragment)
         }
 
         chatBtn?.setOnClickListener {

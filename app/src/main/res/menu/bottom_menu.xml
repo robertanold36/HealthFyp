@@ -15,4 +15,10 @@
         android:icon="@drawable/ic_baseline_analytics_24"
         android:title="statistics"/>
 
+    <item
+        android:id="@+id/medicineFragment"
+        android:enabled="true"
+        android:icon="@drawable/ic_medical"
+        android:title="medicine"/>
+
 </menu>

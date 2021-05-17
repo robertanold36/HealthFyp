@@ -67,4 +67,5 @@ class AppointmentListAdapter(var context: Context) :
 
         return days.distinct()
     }
+
 }
