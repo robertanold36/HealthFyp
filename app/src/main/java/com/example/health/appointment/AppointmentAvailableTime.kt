@@ -60,10 +60,10 @@ class AppointmentAvailableTime : Fragment(), HealthTrackingEventListener {
         healthTrackingViewModel.getAvailableAppointmentTime(
             dayName,
             patientModel.doctorId
-        ).observe(requireActivity(),{
+        ).observe(requireActivity(), {
             adapter.setList(it.distinct())
             adapter.notifyDataSetChanged()
-            pBar!!.visibility=View.INVISIBLE
+            pBar!!.visibility = View.INVISIBLE
         })
 
         val recyclerView = view.findViewById<RecyclerView>(R.id.rvAvailableTime)
@@ -71,14 +71,32 @@ class AppointmentAvailableTime : Fragment(), HealthTrackingEventListener {
 
 
         adapter.onItemClickListener = {
-            val appointmentRequest =
-                AppointmentRequest(it.dayName, it.time, it.appointmentId, patientModel.name, uid!!)
+            healthTrackingViewModel.checkDocumentExist(uid!!, patientModel.doctorId)
+                .observe(requireActivity(), { isExist ->
+                    if (!isExist) {
+                        val appointmentRequest =
+                            AppointmentRequest(
+                                it.dayName,
+                                it.time,
+                                it.appointmentId,
+                                patientModel.name,
+                                uid
+                            )
 
-            healthTrackingViewModel.requestAppointment(
-                it,
-                patientModel.doctorId,
-                appointmentRequest
-            )
+                        healthTrackingViewModel.requestAppointment(
+                            it,
+                            patientModel.doctorId,
+                            appointmentRequest
+                        )
+                    }else{
+                        Toast.makeText(
+                            requireActivity(),
+                            "Please cancel the last appointment",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                })
+
         }
     }
 

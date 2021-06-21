@@ -31,14 +31,14 @@ class ChatActivity : AppCompatActivity() {
     }
 
     private val senderId = firebaseAuth.uid ?: ""
-    val time = Calendar.getInstance().time
+    val time: Date = Calendar.getInstance().time
     private val adapter = GroupAdapter<ViewHolder>()
     private var rvChat: RecyclerView? = null
     private var sendBtn: ImageButton? = null
     private var messageText: EditText? = null
 
     companion object {
-        var chat:ChatModel?=null
+        var chat: ChatModel? = null
         var doctor: Doctor? = null
     }
 
@@ -90,10 +90,10 @@ class ChatActivity : AppCompatActivity() {
         reference.addChildEventListener(object : ChildEventListener {
             override fun onChildAdded(p0: DataSnapshot, previousChildName: String?) {
                 if (p0.exists()) {
-                    Log.e("Testing",p0.toString())
+                    Log.e("Testing", p0.toString())
                     p0.getValue(ChatModel::class.java).also { chat = it }
                     if (chat?.senderId == senderId) {
-                       adapter.add(ChatToAdapter(chat!!))
+                        adapter.add(ChatToAdapter(chat!!))
                     } else {
                         adapter.add(ChatFromAdapter(chat!!))
                     }
@@ -103,23 +103,13 @@ class ChatActivity : AppCompatActivity() {
             }
 
             override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
-                if(!snapshot.exists()){
-                    return
-                }
+
             }
 
             override fun onChildRemoved(snapshot: DataSnapshot) {
-                chat=snapshot.getValue(ChatModel::class.java)
-                
-                if (chat?.senderId == senderId) {
-                    adapter.notifyItemRemoved(adapter.getAdapterPosition(ChatToAdapter(chat!!)))
-
-
-                } else {
-                    adapter.notifyItemRemoved(adapter.getAdapterPosition(ChatFromAdapter(chat!!)))
-
-                    reference.keepSynced(true)
-                }
+                val chat = snapshot.getValue(ChatModel::class.java)
+                Log.e("Testing", chat?.message.toString())
+                loadMsg()
             }
 
             override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {
@@ -130,6 +120,7 @@ class ChatActivity : AppCompatActivity() {
 
             }
         })
+
     }
 
 }

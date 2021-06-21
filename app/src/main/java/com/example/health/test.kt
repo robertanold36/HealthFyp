@@ -1,10 +1,11 @@
 package com.example.health
 
-import java.util.*
 
 
 fun main(){
 
-
+for(i in  3..20){
+    print(i)
+}
 
 }

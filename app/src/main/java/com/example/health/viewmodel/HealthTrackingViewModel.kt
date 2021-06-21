@@ -3,10 +3,7 @@ package com.example.health.viewmodel
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
-import com.example.health.model.Appointment
-import com.example.health.model.AppointmentRequest
-import com.example.health.model.DailyTrack
-import com.example.health.model.Medicine
+import com.example.health.model.*
 import com.example.health.repository.HealthTrackingDatabase
 import com.example.health.repository.HealthTrackingRepository
 import com.example.health.tracker.listener.HealthTrackingEventListener
@@ -40,6 +37,17 @@ class HealthTrackingViewModel(app: Application) : AndroidViewModel(app) {
         }
     }
 
+    fun insertDeviceTrackDetails(deviceTrackModel: DeviceTrackModel)=uiScope.launch {
+        repository.insertDeviceTrackData(deviceTrackModel)
+        withContext(Dispatchers.Main){
+
+        }
+    }
+
+    fun getAllDeviceTrackDetails(mealsTime:String):LiveData<MutableList<DeviceTrackModel>>{
+        return repository.getAllDeviceData(mealsTime)
+    }
+
     fun getAllMedicineData(): LiveData<MutableList<Medicine>> {
         return repository.getAllMedicine()
     }
@@ -55,6 +63,8 @@ class HealthTrackingViewModel(app: Application) : AndroidViewModel(app) {
 
     fun getCountMessage(senderId: String, receiverId: String) =
         repository.counterMessage(senderId, receiverId)
+
+    fun checkDocumentExist(id:String,doctorId: String)=repository.isDocumentExists(id,doctorId)
 
     fun requestAppointment(
         appointment: Appointment,

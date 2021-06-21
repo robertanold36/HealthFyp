@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/app_bar_height"
         android:fitsSystemWindows="true"
-        android:background="@drawable/bg_color"
+        android:background="@color/teal_700"
         android:theme="@style/Theme.Health.AppBarOverlay">
 
         <com.google.android.material.appbar.CollapsingToolbarLayout
@@ -25,19 +25,6 @@
             app:toolbarId="@+id/toolbar"
             app:expandedTitleTextAppearance="@font/lobster"
             >
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/imageShare"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="10dp"
-                android:layout_width="35dp"
-                android:layout_height="40dp"
-                android:layout_gravity="top|end"
-                android:background="@drawable/ic_menu"
-                android:padding="16dp"
-                app:backgroundTint="#ffffff"
-                app:layout_collapseMode="pin"
-                android:layout_marginRight="10dp" />
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
@@ -58,7 +45,7 @@
         android:id="@+id/bottom_navigation"
         style="@style/Widget.MaterialComponents.BottomNavigationView.Colored"
         android:layout_width="match_parent"
-        android:background="?android:attr/windowBackground"
+        android:background="@color/white"
         android:fitsSystemWindows="true"
         app:itemIconTint="@drawable/bottom_item_color"
         app:itemTextColor="@color/black"

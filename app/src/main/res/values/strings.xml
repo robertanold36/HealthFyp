@@ -26,6 +26,11 @@
         than many other starchy foods.
     </string>
 
+    <string-array name="Meals">
+        <item>Before Meals</item>
+        <item>After Meals</item>
+    </string-array>
+
     <string name="fish">
       People need a certain amount of healthful fats to keep their body functioning and to
         promote heart and brain health.
@@ -49,7 +54,7 @@
 
     <string name="disease_education">
 
-        <b>Diabetes mellitus </b>, commonly known as diabetes, is a metabolic disease that causes
+        <b>What is Diabetes mellitus </b>\n\n commonly known as diabetes, is a metabolic disease that causes
         high blood
         sugar. The hormone insulin moves sugar from the blood into your cells to be stored or used
         for energy. With diabetes, your body either doesn’t make enough insulin or can’t effectively
@@ -59,24 +64,24 @@
 
     <string name="disease_education2">
 
-        There are a few different types of diabetes:\n\n
+        Types of Diabetes:\n\n
 
-        <b>Type 1 diabetes </b> is an autoimmune disease. The immune system attacks and destroys cells in
+       <b>Type 1 Diabetes </b> is an autoimmune disease. The immune system attacks and destroys cells in
         the pancreas, where insulin is made. It’s unclear what causes this attack. About 10 percent
         of people with diabetes have this type.\n\n
-        <b>Type 2 diabetes </b> occurs when your body becomes resistant to insulin, and sugar builds up in
+       <b>Type 2 Diabetes </b> occurs when your body becomes resistant to insulin, and sugar builds up in
         your blood.\n\n
-        <b>Prediabetes </b> occurs when your blood sugar is higher than normal, but it’s not high enough
+       <b>Prediabetes </b> occurs when your blood sugar is higher than normal, but it’s not high enough
         for a diagnosis of type 2 diabetes.\n\n
-        <b>Gestational diabetes </b> is high blood sugar during pregnancy. Insulin-blocking hormones
+       <b>Gestational diabetes </b> is high blood sugar during pregnancy. Insulin-blocking hormones
         produced by the placenta cause this type of diabetes.\n\n
-        A rare condition called diabetes insipidus is not related to diabetes mellitus,
+       A rare condition called diabetes insipidus is not related to diabetes mellitus,
         although it has a similar name. It’s a different condition in which your
         kidneys remove too much fluid from your body.\n\n
 
-        Each type of diabetes has unique symptoms, causes, and treatments.
-        Learn more about how these types differ from one another.\n\n
+    </string>
 
+    <string name="symptoms">
         <b>Symptoms of diabetes</b>\n
         Diabetes symptoms are caused by rising blood sugar.\n\n
 
@@ -90,6 +95,9 @@
         blurry vision\n
         extreme fatigue\n
         sores that don’t heal\n\n
+        </string>
+
+    <string name="causes">
 
         <b>Causes of diabetes </b>\n
         Different causes are associated with each type of diabetes.\n\n
@@ -117,14 +125,21 @@
         Women who are overweight when they get pregnant or who gain too much weight during their
         pregnancy are more likely to get gestational diabetes.\n\n
 
-        <b>The bottom line </b>\n
+        <b>General </b>\n
         Both genes and environmental factors play a role in triggering diabetes. Get more
         information here on the causes of diabetes.\n\n
-
 
     </string>
     <string name="nuts">Nuts are another excellent addition to the diet. Like fish, nuts contain healthful fatty acids that help keep the heart healthy.  Walnuts are especially high in omega-3 fatty acids called alpha-lipoic acid (ALA). Like other omega-3s, ALA is important for good heart health.</string>
     <string name="avocados_desc">Avocados have less than 1 gram of sugar, few carbohydrates, a high fiber content, and healthy fats, so you don’t have to worry about them raising your blood sugar levels</string>
-    <string name="eggs_desc">"Regular egg consumption may also reduce your heart disease risk in several ways.  "</string>
+    <string name="eggs_desc">"Regular eggs consumption may also reduce your heart disease risk in several ways.  "</string>
+
+    <string name="dietEdu">Experience a good diet for keeping your health strength</string>
+    <string name="analysis">Observe your daily analysis</string>
+    <string name="awarenessEdu">Keep aware about diabetes and get all updates about disease</string>
+    <string name="logout">Logout</string>
+    <string name="Setting">Setting</string>
+    <string name="Profile">Profile</string>
+
 
 </resources>

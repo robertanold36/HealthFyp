@@ -10,66 +10,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/textView4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginRight="8dp"
-            android:fontFamily="@font/lobster"
-            android:text="Hello ,"
-            android:textColor="#000000"
-            android:textSize="17sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.1"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/textView5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginRight="8dp"
-            android:text=""
-            android:textColor="#009688"
-            android:textSize="16sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.2"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView4" />
-
-        <com.google.android.material.chip.Chip
-            android:id="@+id/trackBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginRight="8dp"
-            android:text="Track your symptoms"
-            android:textColor="@color/teal_700"
-            android:textSize="15sp"
-            app:chipBackgroundColor="@color/white"
-            app:chipStrokeColor="@color/teal_700"
-            app:chipStrokeWidth="1dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.1"
-            app:layout_constraintHorizontal_chainStyle="packed"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView5" />
-
-
-        <HorizontalScrollView
-            android:id="@+id/horizontalScrollView"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvEducation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -77,123 +19,10 @@
             android:layout_marginTop="24dp"
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
-            android:scrollbars="none"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/trackBtn">
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent">
-
-                <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/cardDiet"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginTop="16dp"
-                    app:cardCornerRadius="20dp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="200dp"
-                        android:layout_height="180dp"
-                        android:background="@drawable/food" />
-
-                </com.google.android.material.card.MaterialCardView>
-
-                <com.google.android.material.chip.Chip
-                    android:id="@+id/btnDiet"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Diet Education"
-                    android:textColor="#faaca8"
-                    android:textSize="15sp"
-                    app:chipBackgroundColor="@color/white"
-                    app:chipStrokeColor="#faaca8"
-                    app:chipStrokeWidth="1dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="@+id/cardDiet"
-                    app:layout_constraintHorizontal_bias="1.0"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/cardDiet" />
-
-                <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/cardExercise"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="32dp"
-                    android:layout_marginLeft="32dp"
-                    android:layout_marginTop="16dp"
-                    app:cardCornerRadius="20dp"
-                    app:layout_constraintStart_toEndOf="@+id/cardDiet"
-                    app:layout_constraintTop_toTopOf="parent">
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="200dp"
-                        android:layout_height="180dp"
-                        android:background="@drawable/exercise" />
-                </com.google.android.material.card.MaterialCardView>
-
-                <com.google.android.material.chip.Chip
-                    android:id="@+id/btnExercise"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Best Practice"
-                    android:textColor="@color/teal_700"
-                    android:textSize="15sp"
-                    app:chipBackgroundColor="@color/white"
-                    app:chipStrokeColor="@color/teal_700"
-                    app:chipStrokeWidth="1dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="@+id/cardExercise"
-                    app:layout_constraintHorizontal_bias="1.0"
-                    app:layout_constraintStart_toStartOf="@+id/cardExercise"
-                    app:layout_constraintTop_toBottomOf="@+id/cardExercise" />
-
-                <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/cardEducation"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginEnd="16dp"
-                    android:layout_marginRight="16dp"
-                    app:cardCornerRadius="20dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/cardExercise"
-                    app:layout_constraintTop_toTopOf="@+id/cardExercise">
-
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="200dp"
-                        android:layout_height="180dp"
-                        android:background="@drawable/awareness" />
-
-                </com.google.android.material.card.MaterialCardView>
-
-                <com.google.android.material.chip.Chip
-                    android:id="@+id/btnEducation"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Disease Education"
-                    android:textColor="#E91E63"
-                    android:textSize="15sp"
-                    app:chipBackgroundColor="@color/white"
-                    app:chipStrokeColor="#E91E63"
-                    app:chipStrokeWidth="1dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="@+id/cardEducation"
-                    app:layout_constraintHorizontal_bias="1.0"
-                    app:layout_constraintStart_toStartOf="@+id/cardEducation"
-                    app:layout_constraintTop_toBottomOf="@+id/cardEducation" />
-
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-        </HorizontalScrollView>
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintTop_toTopOf="parent"/>
 
         <TextView
             android:id="@+id/textView11"
@@ -205,7 +34,7 @@
             android:text="More Activities"
             android:textColor="#3F51B5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/horizontalScrollView" />
+            app:layout_constraintTop_toBottomOf="@+id/rvEducation" />
 
 
         <de.hdodenhof.circleimageview.CircleImageView
@@ -346,7 +175,8 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:background="@color/white">
 
                 <ImageView
                     android:id="@+id/imageView3"
@@ -395,7 +225,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_marginLeft="8dp"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="20dp"
                     android:layout_marginEnd="8dp"
                     android:layout_marginRight="8dp"
                     android:layout_marginBottom="16dp"
@@ -406,6 +236,21 @@
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toEndOf="@+id/textView9"
                     app:layout_constraintTop_toBottomOf="@id/textView8" />
+
+                <ImageView
+                    android:id="@+id/btnDelete"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="32dp"
+                    android:layout_marginRight="32dp"
+                    android:src="@drawable/ic_delete"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="1.0"
+                    app:layout_constraintStart_toEndOf="@+id/appointment_time"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.65999997" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </com.google.android.material.card.MaterialCardView>

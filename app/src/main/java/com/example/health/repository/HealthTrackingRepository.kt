@@ -24,13 +24,21 @@ class HealthTrackingRepository(private val healthTrackingDatabase: HealthTrackin
     private var doctorData: MutableLiveData<Doctor> = MutableLiveData()
     var healthTrackingEventListener: HealthTrackingEventListener? = null
     private var count: MutableLiveData<Int> = MutableLiveData()
-    private var appointmentRequest:MutableLiveData<AppointmentRequest> = MutableLiveData()
+    private var appointmentRequest: MutableLiveData<AppointmentRequest> = MutableLiveData()
+    private var isExist: MutableLiveData<Boolean> = MutableLiveData()
 
 
     suspend fun insertDailyData(dailyTrack: DailyTrack) =
         healthTrackingDatabase.healthTrackingDao().insertDailyTrack(dailyTrack)
 
     fun getAllDailyData() = healthTrackingDatabase.healthTrackingDao().getAllDailyTrack()
+
+    suspend fun insertDeviceTrackData(deviceTrackModel: DeviceTrackModel) =
+        healthTrackingDatabase.healthTrackingDao().insertDailyDeviceTrack(deviceTrackModel)
+
+
+    fun getAllDeviceData(mealsTime: String) =
+        healthTrackingDatabase.healthTrackingDao().getAllDeviceDailyTrack(mealsTime)
 
 
     fun getAllAvailableAppointment(doctorId: String): MutableLiveData<List<Appointment>> {
@@ -112,7 +120,6 @@ class HealthTrackingRepository(private val healthTrackingDatabase: HealthTrackin
             }.addOnFailureListener {
                 healthTrackingEventListener?.onFail("Fail to book appointment")
             }
-
     }
 
 
@@ -180,17 +187,33 @@ class HealthTrackingRepository(private val healthTrackingDatabase: HealthTrackin
         return count
     }
 
-    fun checkAppointedRequested(uid:String,doctorId: String):MutableLiveData<AppointmentRequest>{
+    fun checkAppointedRequested(
+        uid: String,
+        doctorId: String
+    ): MutableLiveData<AppointmentRequest> {
 
         firebaseFirestore.collection(appointment)
             .document(doctorId)
             .collection("AppointmentRequested")
             .document(uid).get().addOnSuccessListener {
-                val appointmentRequestData=it.toObject(AppointmentRequest::class.java)
-                appointmentRequest.value=appointmentRequestData
+                val appointmentRequestData = it.toObject(AppointmentRequest::class.java)
+                appointmentRequest.value = appointmentRequestData
             }.addOnFailureListener {
-                healthTrackingEventListener?.onFail("Fail to retrive your appointment data")
+                healthTrackingEventListener?.onFail("Fail to retrieve your appointment data")
             }
         return appointmentRequest
     }
+
+
+    fun isDocumentExists(id: String, doctorId: String): MutableLiveData<Boolean> {
+        firebaseFirestore.collection(appointment).document(doctorId)
+            .collection("AppointmentRequested").document(id).get()
+            .addOnSuccessListener {
+                isExist.value = it.exists()
+            }
+
+        return isExist
+    }
+
+
 }

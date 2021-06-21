@@ -20,7 +20,7 @@ class DietAdapter(var context: Context) : RecyclerView.Adapter<DietAdapter.DietV
     var dietModel4 = DietModel(R.drawable.nuts, "Wall nuts", R.string.nuts)
     var dietModel5 = DietModel(R.drawable.avocado, "Avocados", R.string.avocados_desc)
     var dietModel6 = DietModel(R.drawable.eggs, "Eggs", R.string.eggs_desc)
-    var dataSet = mutableListOf(
+    private var dataSet = mutableListOf(
         dietModel1,
         dietModel2,
         dietModel3,

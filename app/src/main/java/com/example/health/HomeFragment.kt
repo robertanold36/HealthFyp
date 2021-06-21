@@ -11,12 +11,18 @@ import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.RecyclerView
+import com.example.health.education.DailyExerciseAdapter
+import com.example.health.model.AppointmentRequest
 import com.example.health.model.Doctor
 import com.example.health.tracker.listener.HealthTrackingEventListener
+import com.example.health.util.UtilityClass.Companion.appointment
+import com.example.health.util.UtilityClass.Companion.appointmentList
 import com.example.health.util.UtilityClass.Companion.getPrefs
 import com.example.health.viewmodel.HealthTrackingViewModel
 import com.google.android.material.card.MaterialCardView
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import de.hdodenhof.circleimageview.CircleImageView
 
 
@@ -31,10 +37,15 @@ class HomeFragment : Fragment(), HealthTrackingEventListener {
     private var chatBtn: ImageButton? = null
     private var countMsg: TextView? = null
     private var cardBadge: CardView? = null
-    private var name: TextView? = null
     private var appTime: TextView? = null
-    private var cardAppTime:MaterialCardView?=null
-
+    private var cardAppTime: MaterialCardView? = null
+    private lateinit var adapter: DailyExerciseAdapter
+    private lateinit var rvEducation: RecyclerView
+    private lateinit var btnDelete: ImageView
+    private lateinit var appointmentRequest: AppointmentRequest
+    private val firebaseFirestore by lazy {
+        FirebaseFirestore.getInstance()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -55,25 +66,42 @@ class HomeFragment : Fragment(), HealthTrackingEventListener {
         healthTrackingViewModel.repository.healthTrackingEventListener = this
         val patientModel = getPrefs(requireContext())
 
+        rvEducation = view.findViewById(R.id.rvEducation)
+        adapter = DailyExerciseAdapter(requireActivity())
         profileImage = view.findViewById(R.id.profile_image)
         nameDoctor = view.findViewById(R.id.textView12)
         doctorName = view.findViewById(R.id.doctorName)
         chatBtn = view.findViewById(R.id.btnChat)
         cardBadge = view.findViewById(R.id.card_badge)
         countMsg = view.findViewById(R.id.msg_counter)
-        name = view.findViewById(R.id.textView5)
-        appTime=view.findViewById(R.id.appointment_time)
-        name?.text = patientModel.name
-        cardAppTime=view.findViewById(R.id.materialCardView)
+        appTime = view.findViewById(R.id.appointment_time)
+        cardAppTime = view.findViewById(R.id.materialCardView)
+        btnDelete = view.findViewById(R.id.btnDelete)
+
+        rvEducation.adapter = adapter
+
+        adapter.onItemClickListener = {
+            when (it) {
+                1 -> {
+                    findNavController().navigate(R.id.action_homeFragment_to_dietFragment)
+                }
+                2 -> {
+                    findNavController().navigate(R.id.action_homeFragment_to_analysisFragment)
+
+                }
+                3 -> {
+                    findNavController().navigate(R.id.action_homeFragment_to_educationFragment)
+                }
+                else -> {
+                    Toast.makeText(requireActivity(), "None clicked", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
 
 
         Log.e("uid", FirebaseAuth.getInstance().uid.toString())
 
         val uid = FirebaseAuth.getInstance().uid
-
-        val horizontalScrollView =
-            view.findViewById<HorizontalScrollView>(R.id.horizontalScrollView)
-        horizontalScrollView.isHorizontalScrollBarEnabled = false
 
 
         healthTrackingViewModel.getDoctorDetails(getPrefs(requireContext()).doctorId)
@@ -90,32 +118,50 @@ class HomeFragment : Fragment(), HealthTrackingEventListener {
 
         healthTrackingViewModel.checkAppointmentRequested(uid!!, patientModel.doctorId)
             .observe(requireActivity(), {
-                if (it!=null) {
-                    val time=it.time
-                    val day=it.dayName
-                    appTime!!.text = getString(R.string.app_time,time,day)
-                    cardAppTime!!.visibility=View.VISIBLE
-                }else{
-                    cardAppTime!!.visibility=View.INVISIBLE
+                if (it != null) {
+                    appointmentRequest = it
+                    val time = it.time
+                    val day = it.dayName
+                    appTime!!.text = getString(R.string.app_time, time, day)
+                    cardAppTime!!.visibility = View.VISIBLE
+                } else {
+                    cardAppTime!!.visibility = View.INVISIBLE
                 }
             })
 
-
-        view.findViewById<Button>(R.id.trackBtn).setOnClickListener {
-            findNavController().navigate(R.id.action_homeFragment_to_statisticsFragment)
+        btnDelete.setOnClickListener {
+            pBar?.visibility = View.VISIBLE
+            firebaseFirestore.collection(appointment).document(patientModel.doctorId)
+                .collection(appointmentList).document(appointmentRequest.appointmentId)
+                .update("status", "Available").addOnSuccessListener {
+                    firebaseFirestore.collection(appointment).document(patientModel.doctorId)
+                        .collection("AppointmentRequested").document(appointmentRequest.uid)
+                        .delete()
+                        .addOnSuccessListener {
+                            pBar?.visibility = View.INVISIBLE
+                            cardAppTime!!.visibility = View.INVISIBLE
+                            Toast.makeText(
+                                requireActivity(),
+                                "Successfully cancel the appointment",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }.addOnFailureListener {
+                            pBar?.visibility = View.INVISIBLE
+                            Toast.makeText(
+                                requireActivity(),
+                                "Fail to cancel the appointment? Check your internet connection",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                }.addOnFailureListener {
+                    Toast.makeText(
+                        requireActivity(),
+                        "Fail to cancel appointment? Try Again later",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
         }
 
-        view.findViewById<Button>(R.id.btnDiet)?.setOnClickListener {
-            findNavController().navigate(R.id.action_homeFragment_to_dietFragment)
-        }
-
-        view.findViewById<Button>(R.id.btnExercise).setOnClickListener {
-            findNavController().navigate(R.id.action_homeFragment_to_dailyExerciseFragment)
-        }
-
-        view.findViewById<Button>(R.id.btnEducation).setOnClickListener {
-            findNavController().navigate(R.id.action_homeFragment_to_educationFragment)
-        }
 
         chatBtn?.setOnClickListener {
             Log.e("TestingDoctor", doctorDetails.toString())
